@@ -306,10 +306,15 @@
 
     <!-- SLIDE 5: BORUVKA ALGORITHM WITH PROGRESSION -->
     <section class="slide" id="slide-5">
-      <div class="slide-header">
-        <div class="slide-category">04 / Thuật toán tiền nhiệm</div>
-        <h2 class="slide-title">Thuật Toán Borůvka (1926) & Tính Song Song</h2>
-        <p class="slide-subtitle">Thuật toán MST đầu tiên trong lịch sử, ra đời phục vụ tối ưu chi phí lưới điện vùng Moravia.</p>
+      <div class="slide-header" style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;">
+        <div>
+          <div class="slide-category">04 / Thuật toán tiền nhiệm</div>
+          <h2 class="slide-title">Thuật Toán Borůvka (1926) & Tính Song Song</h2>
+          <p class="slide-subtitle">Thuật toán MST đầu tiên trong lịch sử, ra đời phục vụ tối ưu chi phí lưới điện vùng Moravia.</p>
+        </div>
+        <button class="jump-to-viz-btn" onclick="jumpToVisualizer('boruvka')" title="Chuyển tới Slide 9 và xem mô phỏng 2.5D của thuật toán Borůvka">
+          <span class="jump-icon">▷</span> Xem trực quan 2.5D
+        </button>
       </div>
 
       <div class="grid-2">
@@ -385,10 +390,15 @@
 
     <!-- SLIDE 6: KRUSKAL ALGORITHM & DSU TABS -->
     <section class="slide" id="slide-6">
-      <div class="slide-header">
-        <div class="slide-category">05 / Thuật toán Kruskal</div>
-        <h2 class="slide-title">Kruskal & Tối Ưu Hóa Disjoint Set Union (DSU)</h2>
-        <p class="slide-subtitle">Chiến lược tham lam theo cạnh kết hợp 2 kỹ thuật tối ưu kinh điển: Path Compression & Union by Rank.</p>
+      <div class="slide-header" style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;">
+        <div>
+          <div class="slide-category">05 / Thuật toán Kruskal</div>
+          <h2 class="slide-title">Kruskal & Tối Ưu Hóa Disjoint Set Union (DSU)</h2>
+          <p class="slide-subtitle">Chiến lược tham lam theo cạnh kết hợp 2 kỹ thuật tối ưu kinh điển: Path Compression & Union by Rank.</p>
+        </div>
+        <button class="jump-to-viz-btn" onclick="jumpToVisualizer('kruskal')" title="Chuyển tới Slide 9 và xem mô phỏng 2.5D của thuật toán Kruskal">
+          <span class="jump-icon">▷</span> Xem trực quan 2.5D
+        </button>
       </div>
 
       <div class="grid-2">
@@ -450,10 +460,15 @@ mst_edges = []
 
     <!-- SLIDE 7: PRIM ALGORITHM & HEAP COMPARISON -->
     <section class="slide" id="slide-7">
-      <div class="slide-header">
-        <div class="slide-category">06 / Thuật toán Prim</div>
-        <h2 class="slide-title">Prim & Hàng Đợi Ưu Tiên (Lazy vs Eager)</h2>
-        <p class="slide-subtitle">Nuôi lớn một cây liên thông duy nhất từ 1 đỉnh và tối ưu bộ nhớ với IndexedMinHeap.</p>
+      <div class="slide-header" style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;">
+        <div>
+          <div class="slide-category">06 / Thuật toán Prim</div>
+          <h2 class="slide-title">Prim & Hàng Đợi Ưu Tiên (Lazy vs Eager)</h2>
+          <p class="slide-subtitle">Nuôi lớn một cây liên thông duy nhất từ 1 đỉnh và tối ưu bộ nhớ với IndexedMinHeap.</p>
+        </div>
+        <button class="jump-to-viz-btn" onclick="jumpToVisualizer('prim')" title="Chuyển tới Slide 9 và xem mô phỏng 2.5D của thuật toán Prim">
+          <span class="jump-icon">▷</span> Xem trực quan 2.5D
+        </button>
       </div>
 
       <div class="grid-2">
@@ -600,69 +615,229 @@ mst_edges = []
       </table>
     </section>
 
-    <!-- SLIDE 9: INTERACTIVE SIMULATOR -->
+    <!-- SLIDE 9: INTERACTIVE ALGORITHM VISUALIZER & CODE RUNNER (CODEPEET STYLE) -->
     <section class="slide" id="slide-9">
-      <div class="slide-header">
-        <div class="slide-category">08 / Mô phỏng trực quan</div>
-        <h2 class="slide-title">Mô Phỏng Quá Trình Dựng Cây MST</h2>
-        <p class="slide-subtitle">Quan sát cách Kruskal (DSU) hoặc Prim (Heap) kết nạp và từ chối cạnh theo thời gian thực.</p>
+      <!-- 1. Top Header: Title, Description, Complexity Badges, View Controls -->
+      <div class="algo-header-bar">
+        <div class="algo-title-block">
+          <div class="algo-badge-row">
+            <span class="algo-pill-category">08 / Interactive Visualizer</span>
+            <div class="algo-tabs" id="algoTabs">
+              <button class="algo-tab-btn active" data-algo="kruskal">✦ Kruskal (DSU)</button>
+              <button class="algo-tab-btn" data-algo="prim">Prim (Min-Heap)</button>
+              <button class="algo-tab-btn" data-algo="boruvka">Borůvka (Song song)</button>
+            </div>
+          </div>
+          <h2 class="algo-main-title slide-title" id="algoMainTitle">Kruskal's Algorithm (MST + DSU)</h2>
+          <p class="algo-main-desc" id="algoMainDesc">
+            Xây dựng Cây bao trùm nhỏ nhất bằng cách quét toàn bộ cạnh tăng dần, kết hợp Disjoint Set Union (DSU) nén đường đi để loại bỏ chu trình.
+          </p>
+        </div>
+
+        <div class="algo-metrics-block">
+          <div class="algo-complexity-box">
+            <div class="complexity-tag time" title="Độ phức tạp thời gian">
+              <span class="complexity-icon">⏱</span>
+              <span class="complexity-label">TIME</span>
+              <strong class="complexity-value" id="algoTimeComp">O(E log E)</strong>
+            </div>
+            <div class="complexity-tag space" title="Độ phức tạp không gian bộ nhớ">
+              <span class="complexity-icon">💾</span>
+              <span class="complexity-label">SPACE</span>
+              <strong class="complexity-value" id="algoSpaceComp">O(V)</strong>
+            </div>
+          </div>
+          <div class="algo-view-actions">
+            <button class="algo-action-btn active" id="btnToggleIsoView" title="Chuyển đổi góc nhìn 2.5D Isometric / 2D Phẳng">
+              <span class="btn-icon">❖</span> <span id="isoBtnText">2.5D Isometric</span>
+            </button>
+            <button class="algo-action-btn" id="btnToggleLayout" title="Chuyển đổi giữa Bố cục Song song (Split) và Dọc (Stacked kiểu Reels)">
+              <span class="btn-icon">◫</span> <span id="layoutBtnText">Split View</span>
+            </button>
+            <button class="algo-action-btn" id="btnTheaterMode" title="Mở rộng toàn màn hình (Theater Mode)">
+              <span class="btn-icon">⛶</span> <span>Theater</span>
+            </button>
+          </div>
+        </div>
       </div>
 
-      <div class="simulator-layout">
-        <div class="canvas-panel">
-          <div class="canvas-header">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span>SCHEMATIC (6 NODES)</span>
-              <span class="tag-clean" style="font-size: 0.68rem; color: #93c5fd;">✋ Kéo thả đỉnh</span>
+      <!-- Main Visualizer Studio Layout (Split Studio / Stacked Reel) -->
+      <div class="algo-studio-layout" id="algoStudioLayout">
+        
+        <!-- Left Column: Visual Canvas + State Bar + Controls -->
+        <div class="algo-canvas-column">
+          
+          <!-- State Bar: Variables & Array/Stack Badges -->
+          <div class="algo-state-bar">
+            <div class="state-vars-group">
+              <div class="state-var-pill accent" id="stateVarP" title="Cạnh hoặc đỉnh đang xét">
+                <span class="var-name">edge</span> = <strong class="var-val" id="varPVal">Chờ duyệt</strong>
+              </div>
+              <div class="state-var-pill" id="stateVarTurn" title="Thao tác kiểm tra chu trình / lát cắt">
+                <span class="var-name">dsu_check</span> = <strong class="var-val" id="varTurnVal">Khởi tạo</strong>
+              </div>
+              <div class="state-var-pill subtle" id="stateVarCross" title="Trọng số cạnh / Chi phí">
+                <span class="var-name">weight</span> = <strong class="var-val" id="varCrossVal">0.0 km</strong>
+              </div>
             </div>
-            <div style="display: flex; align-items: center; gap: 6px;">
-              <button class="minimal-btn" id="resetLayoutBtn" style="padding: 2px 8px; font-size: 0.7rem;" title="Khôi phục tọa độ đỉnh mặc định">[ ↺ Reset Layout ]</button>
+
+            <!-- Hull Stack / Array Badges Trail -->
+            <div class="state-stack-group">
+              <span class="stack-label" id="stackLabel">MST EDGES:</span>
+              <div class="stack-badge-trail" id="stackBadgeTrail">
+                <span class="stack-empty-hint">Chưa nạp cạnh</span>
+              </div>
             </div>
           </div>
-          <svg class="sim-svg" id="simSvg" viewBox="0 0 520 380"></svg>
-          <div class="canvas-footer">
-            <span id="simCanvasStatus">Mẹo: Kéo thả đỉnh để đổi hình dạng đồ thị. Click vào đỉnh để chọn điểm bắt đầu cho Prim.</span>
+
+          <!-- Central Visual Canvas: Isometric 2.5D Dark Grid Platform -->
+          <div class="algo-canvas-wrapper" id="algoCanvasWrapper">
+            <div class="canvas-ambient-glow"></div>
+            <svg class="algo-isometric-svg" id="algoIsoSvg" viewBox="0 0 840 460" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <!-- 2.5D Lighting & Shadow Defs -->
+                <radialGradient id="platformSpotlight" cx="50%" cy="40%" r="65%">
+                  <stop offset="0%" stop-color="#1e293b" stop-opacity="0.9" />
+                  <stop offset="60%" stop-color="#0f172a" stop-opacity="0.95" />
+                  <stop offset="100%" stop-color="#090d16" stop-opacity="1" />
+                </radialGradient>
+                <linearGradient id="podiumLeftFace" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#1e293b" />
+                  <stop offset="100%" stop-color="#0c111c" />
+                </linearGradient>
+                <linearGradient id="podiumRightFace" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#141c2c" />
+                  <stop offset="100%" stop-color="#070a12" />
+                </linearGradient>
+                
+                <!-- Glow Filters for CodePeet Neon Style -->
+                <filter id="glowCyan" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="4.5" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+                <filter id="glowOrange" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="4" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+                <filter id="glowGold" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="5.5" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+                <filter id="platformShadow" x="-30%" y="-30%" width="160%" height="160%">
+                  <feGaussianBlur stdDeviation="18" />
+                </filter>
+                <filter id="nodeShadow" x="-60%" y="-60%" width="220%" height="220%">
+                  <feGaussianBlur stdDeviation="3.2" />
+                </filter>
+              </defs>
+
+              <!-- Isometric Rendering Layers -->
+              <g id="isoPlatformShadowGroup"></g>
+              <g id="isoPodiumSidesGroup"></g>
+              <g id="isoPlatformFloorGroup"></g>
+              <g id="isoGridLinesGroup"></g>
+              <g id="isoFloorShadowsGroup"></g>
+              <g id="isoHullFillGroup"></g>
+              <g id="isoConnectionsGroup"></g>
+              <g id="isoTethersGroup"></g>
+              <g id="isoNodesGroup"></g>
+              <g id="isoOverlayLabelsGroup"></g>
+            </svg>
+
+            <!-- Bottom Floating Canvas Legend -->
+            <div class="canvas-legend-dock">
+              <div class="legend-item"><span class="legend-dot emerald"></span> <span>Cạnh MST</span></div>
+              <div class="legend-item"><span class="legend-dot cyan"></span> <span>Ứng viên (Xét)</span></div>
+              <div class="legend-item"><span class="legend-dot red"></span> <span>Chu trình (Loại)</span></div>
+              <div class="legend-item"><span class="legend-dot gold"></span> <span>Gốc / Cụm</span></div>
+              <div class="legend-item"><span class="legend-dot slate"></span> <span>Khả dĩ</span></div>
+            </div>
+          </div>
+
+          <!-- Step Narration & Quick Status -->
+          <div class="algo-narrative-bar">
+            <span class="narrative-step-icon">⚡</span>
+            <span class="narrative-text" id="algoNarrativeText">Sẵn sàng thực thi. Bấm [Bước tiếp ⏭] hoặc [Auto Play ▶] để bắt đầu mô phỏng.</span>
+          </div>
+
+          <!-- Execution Controls Bar: Step, Play, Reset, Speed Slider -->
+          <div class="algo-controls-dock">
+            <div class="controls-playback-group">
+              <button class="ctrl-btn" id="ctrlPrevStepBtn" title="Lùi 1 bước (Phím [)">⏮ Lùi bước</button>
+              <button class="ctrl-btn primary" id="ctrlAutoPlayBtn" title="Tự động chạy / Tạm dừng (Phím Space)">▶ Auto Play</button>
+              <button class="ctrl-btn" id="ctrlNextStepBtn" title="Tiến 1 bước (Phím ])">Bước tiếp ⏭</button>
+              <button class="ctrl-btn subtle" id="ctrlResetBtn" title="Đặt lại từ đầu (Phím R)">↺ Đặt lại</button>
+              <button class="ctrl-btn subtle" id="ctrlRandomBtn" title="Khởi tạo lại mô phỏng">↺ Chạy lại</button>
+            </div>
+
+            <!-- Scrubber & Speed Slider -->
+            <div class="controls-scrubber-group">
+              <div class="step-progress-wrapper">
+                <span class="step-badge" id="stepCounterBadge">Step 00 / 00</span>
+                <input type="range" class="step-scrubber-slider" id="stepScrubber" min="0" max="0" value="0" title="Kéo thanh trượt để nhảy tới bước bất kỳ">
+              </div>
+
+              <div class="speed-slider-wrapper">
+                <span class="speed-label" id="speedLabel">1.0x (700ms)</span>
+                <input type="range" class="speed-range-slider" id="speedSlider" min="200" max="1800" step="100" value="700" title="Điều chỉnh tốc độ thực thi">
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="control-panel">
-          <div class="sim-controls-card">
-            <div class="card-num">ALGORITHM CONTROLS</div>
-
-            <div class="sim-btn-group">
-              <button class="sim-btn active-algo" id="simKruskalBtn">Kruskal (DSU)</button>
-              <button class="sim-btn" id="simPrimBtn">Prim (Heap)</button>
-            </div>
-
-            <div class="sim-btn-group">
-              <button class="sim-btn primary" id="simStepBtn">Từng bước (Step)</button>
-              <button class="sim-btn" id="simAutoBtn">Tự động</button>
-              <button class="sim-btn" id="simResetBtn">Đặt lại</button>
-            </div>
-
-            <div class="sim-stat-grid">
-              <div class="sim-stat-box">
-                <div class="sim-stat-val" id="simEdgesCount">0 / 5</div>
-                <div class="sim-stat-lbl">Số Cạnh MST</div>
+        <!-- Right Column: macOS Code Panel with Active Line Glowing Track -->
+        <div class="algo-code-column">
+          <div class="macos-code-window">
+            <!-- macOS Window Header -->
+            <div class="macos-window-header">
+              <div class="macos-dots">
+                <span class="macos-dot close" title="Đóng"></span>
+                <span class="macos-dot minimize" title="Thu nhỏ"></span>
+                <span class="macos-dot maximize" id="macosDotMaximize" title="Mở rộng Theater Mode"></span>
               </div>
-              <div class="sim-stat-box">
-                <div class="sim-stat-val" id="simWeightVal">0.0</div>
-                <div class="sim-stat-lbl">Tổng Chi Phí</div>
+              <div class="macos-tabs">
+                <div class="macos-tab active" id="macosActiveTab">
+                  <span class="tab-lang-icon">🐍</span>
+                  <span class="tab-filename" id="macosFilename">kruskal_mst.py - Python</span>
+                </div>
               </div>
-              <div class="sim-stat-box">
-                <div class="sim-stat-val" id="simCompsVal">6</div>
-                <div class="sim-stat-lbl">Số Cụm DSU</div>
+              <div class="macos-window-actions">
+                <span class="code-badge-pill" id="activeLineIndicator">Line 01</span>
               </div>
             </div>
-          </div>
 
-          <div class="sim-log-card">
-            <div class="sim-log-header">EXECUTION LOG</div>
-            <div class="sim-log-content" id="simLogContent">
-              <div class="log-item info">> Sẵn sàng chạy mô phỏng. Bấm "Từng bước" để bắt đầu.</div>
+            <!-- Code Editor Body with Line Numbers & Active Line Highlight Bar -->
+            <div class="macos-code-body" id="macosCodeBody">
+              <div class="code-gutter" id="codeGutter">
+                <!-- Line numbers rendered dynamically -->
+              </div>
+              <div class="code-lines-container" id="codeLinesContainer">
+                <!-- Code lines with syntax highlighting rendered dynamically -->
+              </div>
+            </div>
+
+            <!-- Code Panel Footer: Active Variables Watch Table -->
+            <div class="macos-code-footer">
+              <div class="var-inspector-header">
+                <span>ACTIVE VARIABLES WATCH</span>
+                <span class="var-scope-badge">LOCAL SCOPE</span>
+              </div>
+              <div class="var-inspector-grid" id="varInspectorGrid">
+                <!-- Variables rendered dynamically -->
+              </div>
             </div>
           </div>
         </div>
+
       </div>
     </section>
 
@@ -971,13 +1146,18 @@ mst_edges = []
           <span class="shortcut-key">?</span>
         </div>
         <div class="shortcut-row">
-          <span>Tương tác Slide 09 &amp; 10</span>
-          <span class="shortcut-key">Chuột (Kéo thả đỉnh / Click đổi Start)</span>
+          <span>Tương tác Visualizer (Slide 09)</span>
+          <span class="shortcut-key">[ (Lùi) / ] (Tiến) / Space (Play)</span>
+        </div>
+        <div class="shortcut-row">
+          <span>Tương tác Bản đồ Hà Nội (Slide 10)</span>
+          <span class="shortcut-key">Chuột (Kéo thả đỉnh / Click trạm)</span>
         </div>
       </div>
     </div>
   </div>
 
+  <script src="visualizer.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
