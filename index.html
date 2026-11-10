@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" data-theme="light">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Smart Delivery Network Design Using MST | Minimal Presentation</title>
-  <meta name="description" content="Slide thuyết trình đề tài Thiết kế mạng lưới giao vận thông minh bằng Cây bao trùm nhỏ nhất (MST) - Môn Cấu trúc dữ liệu & Giải thuật. Phong cách tối giản (Minimalism).">
+  <meta name="description"
+    content="Slide thuyết trình đề tài Thiết kế mạng lưới giao vận thông minh bằng Cây bao trùm nhỏ nhất (MST) - Môn Cấu trúc dữ liệu & Giải thuật. Phong cách tối giản (Minimalism).">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
   <!-- Top Minimal Header -->
@@ -28,11 +31,13 @@
 
       <!-- Slide Indicator -->
       <div class="slide-indicator">
-        SLIDE <strong id="currentSlideNum">01</strong> / <span id="totalSlideNum">12</span>
+        SLIDE <strong id="currentSlideNum">01</strong> / <span id="totalSlideNum">13</span>
       </div>
     </div>
 
     <div class="header-actions">
+      <button class="minimal-btn theme-toggle-btn" id="themeToggleBtn" title="Chuyển sang Giao diện Tối (Phím T)">[ 🌙
+        DARK ]</button>
       <button class="minimal-btn" id="toggleNotesBtn" title="Ghi chú người thuyết trình (Phím S)">[ NOTES ]</button>
       <button class="minimal-btn" id="toggleOverviewBtn" title="Tổng quan các slide (Phím O)">[ OVERVIEW ]</button>
       <button class="minimal-btn" id="fullscreenBtn" title="Toàn màn hình (Phím F)">[ FULLSCREEN ]</button>
@@ -55,7 +60,8 @@
         </h1>
 
         <p class="hero-desc">
-          Tối ưu hóa và quy hoạch mạng lưới giao vận bưu chính bằng Cây bao trùm nhỏ nhất (Minimum Spanning Tree) qua ba giải thuật Borůvka, Kruskal và Prim.
+          Tối ưu hóa và quy hoạch mạng lưới giao vận bưu chính bằng Cây bao trùm nhỏ nhất (Minimum Spanning Tree) qua ba
+          giải thuật Borůvka, Kruskal và Prim.
         </p>
 
         <div class="hero-team-grid">
@@ -96,7 +102,8 @@
       <div class="slide-header">
         <div class="slide-category">01 / Bối cảnh & Đặt vấn đề</div>
         <h2 class="slide-title">Thách Thức Trong Quy Hoạch Hạ Tầng Vận Tải</h2>
-        <p class="slide-subtitle">Chi phí xây dựng và duy trì hạ tầng vận tải giữa các kho bãi tăng vọt nếu thiếu quy hoạch cấu trúc.</p>
+        <p class="slide-subtitle">Chi phí xây dựng và duy trì hạ tầng vận tải giữa các kho bãi tăng vọt nếu thiếu quy
+          hoạch cấu trúc.</p>
       </div>
 
       <div class="grid-3">
@@ -116,7 +123,8 @@
           <div class="card-num">02 / CONNECTIVITY</div>
           <h3 class="card-title">Đảm Bảo Tính Liên Thông 100%</h3>
           <p class="card-desc">
-            Mạng lưới phải bảo đảm rằng bưu phẩm gửi từ bất kỳ bưu cục nào cũng có thể luân chuyển tới mọi điểm nút khác trong hệ thống mà không tồn tại các thành phần cô lập.
+            Mạng lưới phải bảo đảm rằng bưu phẩm gửi từ bất kỳ bưu cục nào cũng có thể luân chuyển tới mọi điểm nút khác
+            trong hệ thống mà không tồn tại các thành phần cô lập.
           </p>
         </div>
 
@@ -124,7 +132,8 @@
           <div class="card-num">03 / OBJECTIVE</div>
           <h3 class="card-title">Giải Pháp MST Cốt Lõi</h3>
           <p class="card-desc">
-            Tìm tập hợp đúng <span class="math"><i>V</i> − 1</span> tuyến đường huyết mạch, loại bỏ triệt để chu trình dư thừa sao cho <strong>tổng chi phí đầu tư hạ tầng toàn mạng lưới đạt giá trị tối thiểu</strong>.
+            Tìm tập hợp đúng <span class="math"><i>V</i> − 1</span> tuyến đường huyết mạch, loại bỏ triệt để chu trình
+            dư thừa sao cho <strong>tổng chi phí đầu tư hạ tầng toàn mạng lưới đạt giá trị tối thiểu</strong>.
           </p>
         </div>
       </div>
@@ -132,9 +141,12 @@
       <div class="card" style="margin-top: 18px;">
         <div class="card-num">COMPARATIVE SCOPE</div>
         <div class="grid-3" style="font-size: 0.88rem; color: var(--text-2); line-height: 1.6;">
-          <div>• <strong>MST (Bài toán này):</strong> Tối ưu hóa tổng chi phí xây dựng hạ tầng cố định cho toàn bộ mạng lưới.</div>
-          <div>• <strong>Dijkstra:</strong> Tìm hành trình ngắn nhất cho một bưu phẩm cụ thể đi từ điểm A đến điểm B.</div>
-          <div>• <strong>TSP (Salesperson):</strong> Lập lộ trình cho một xe đi qua tất cả các điểm rồi quay về (NP-hard).</div>
+          <div>• <strong>MST (Bài toán này):</strong> Tối ưu hóa tổng chi phí xây dựng hạ tầng cố định cho toàn bộ mạng
+            lưới.</div>
+          <div>• <strong>Dijkstra:</strong> Tìm hành trình ngắn nhất cho một bưu phẩm cụ thể đi từ điểm A đến điểm B.
+          </div>
+          <div>• <strong>TSP (Salesperson):</strong> Lập lộ trình cho một xe đi qua tất cả các điểm rồi quay về
+            (NP-hard).</div>
         </div>
       </div>
     </section>
@@ -144,7 +156,8 @@
       <div class="slide-header">
         <div class="slide-category">02 / Mô hình hóa & Dữ liệu</div>
         <h2 class="slide-title">Mô Hình Đồ Thị Logistics & Khoảng Cách GPS</h2>
-        <p class="slide-subtitle">Chuẩn hóa cấu trúc đồ thị vô hướng có trọng số <span class="math"><i>G</i> = (<i>V</i>, <i>E</i>)</span> dựa trên tọa độ địa lý thực tế.</p>
+        <p class="slide-subtitle">Chuẩn hóa cấu trúc đồ thị vô hướng có trọng số <span class="math"><i>G</i> =
+            (<i>V</i>, <i>E</i>)</span> dựa trên tọa độ địa lý thực tế.</p>
       </div>
 
       <div class="grid-2">
@@ -155,13 +168,15 @@
             <li class="minimal-list-item">
               <span class="list-num">01.</span>
               <div>
-                <strong>Central Mega Hub (Kho tổng):</strong> Nút trung tâm tiếp nhận hàng liên tỉnh (Long Biên Mega SOC, Bắc Từ Liêm Hub).
+                <strong>Central Mega Hub (Kho tổng):</strong> Nút trung tâm tiếp nhận hàng liên tỉnh (Long Biên Mega
+                SOC, Bắc Từ Liêm Hub).
               </div>
             </li>
             <li class="minimal-list-item">
               <span class="list-num">02.</span>
               <div>
-                <strong>Regional Warehouse / DC (Kho trung chuyển):</strong> Phân phối hàng cấp quận huyện (Cầu Giấy DC, Đống Đa DC).
+                <strong>Regional Warehouse / DC (Kho trung chuyển):</strong> Phân phối hàng cấp quận huyện (Cầu Giấy DC,
+                Đống Đa DC).
               </div>
             </li>
             <li class="minimal-list-item">
@@ -173,7 +188,8 @@
           </ul>
 
           <div style="margin-top: 20px; font-size: 0.88rem; color: var(--text-3);">
-            Trọng số tuyến đường: <span class="math"><i>w</i>(<i>u</i>, <i>v</i>) = Distance(<i>u</i>, <i>v</i>) × Cost_Factor(Road_Type)</span>.
+            Trọng số tuyến đường: <span class="math"><i>w</i>(<i>u</i>, <i>v</i>) = Distance(<i>u</i>, <i>v</i>) ×
+              Cost_Factor(Road_Type)</span>.
           </div>
         </div>
 
@@ -182,7 +198,8 @@
             <div class="card-num">SPHERICAL DISTANCE</div>
             <h3 class="card-title">Công Thức Mặt Cầu Haversine</h3>
             <p class="card-desc" style="margin-bottom: 10px;">
-              Tránh sai số lớn của khoảng cách Euclid phẳng trên bề mặt Trái Đất (<span class="math"><i>R</i> ≈ 6371 km</span>):
+              Tránh sai số lớn của khoảng cách Euclid phẳng trên bề mặt Trái Đất (<span class="math"><i>R</i> ≈ 6371
+                km</span>):
             </p>
 
             <div class="code-container">
@@ -190,16 +207,19 @@
                 <span>haversine.py</span>
                 <span>Python</span>
               </div>
-              <div class="code-content"><span class="code-keyword">def</span> <span class="code-func">haversine_distance</span>(lat1, lon1, lat2, lon2):
-    phi1, phi2 = radians(lat1), radians(lat2)
-    dphi = radians(lat2 - lat1)
-    dlambda = radians(lon2 - lon1)
-    a = sin(dphi/2)**2 + cos(phi1)*cos(phi2)*sin(dlambda/2)**2
-    <span class="code-keyword">return</span> 2 * 6371.0 * asin(sqrt(a))</div>
+              <div class="code-content"><span class="code-keyword">def</span> <span
+                  class="code-func">haversine_distance</span>(lat1, lon1, lat2, lon2):
+                phi1, phi2 = radians(lat1), radians(lat2)
+                dphi = radians(lat2 - lat1)
+                dlambda = radians(lon2 - lon1)
+                a = sin(dphi/2)**2 + cos(phi1)*cos(phi2)*sin(dlambda/2)**2
+                <span class="code-keyword">return</span> 2 * 6371.0 * asin(sqrt(a))
+              </div>
             </div>
           </div>
 
-          <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 0.82rem; color: var(--text-3);">
+          <div
+            style="margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 0.82rem; color: var(--text-3);">
             Dataset thực tế: <span class="tag-clean">hanoi_network.json</span> (22 đỉnh, 30 cạnh kết nối bưu chính).
           </div>
         </div>
@@ -211,7 +231,8 @@
       <div class="slide-header">
         <div class="slide-category">03 / Cơ sở lý thuyết</div>
         <h2 class="slide-title">Các Tính Chất Toán Học Nền Tảng Của MST</h2>
-        <p class="slide-subtitle">Nguyên lý bảo đảm tính tối ưu toàn cục cho các thuật toán Tham lam (Greedy Choice Property).</p>
+        <p class="slide-subtitle">Nguyên lý bảo đảm tính tối ưu toàn cục cho các thuật toán Tham lam (Greedy Choice
+          Property).</p>
       </div>
 
       <div class="grid-2">
@@ -219,34 +240,43 @@
           <div class="card-num">PROPERTY 01 / CUT THEOREM</div>
           <h3 class="card-title">Tính Chất Lát Cắt (Cut Property)</h3>
           <p class="card-desc">
-            Với bất kỳ lát cắt <span class="math">(<i>S</i>, <i>V</i> \ <i>S</i>)</span> nào chia đôi tập đỉnh, <strong>cạnh có trọng số nhỏ nhất băng qua lát cắt luôn thuộc mọi cây MST</strong>.
+            Với bất kỳ lát cắt <span class="math">(<i>S</i>, <i>V</i> \ <i>S</i>)</span> nào chia đôi tập đỉnh,
+            <strong>cạnh có trọng số nhỏ nhất băng qua lát cắt luôn thuộc mọi cây MST</strong>.
           </p>
 
           <!-- SVG Diagram for Cut Property -->
           <div class="theory-svg-wrap">
             <svg class="theory-svg" viewBox="0 0 320 110">
-              <rect x="15" y="15" width="105" height="80" rx="6" fill="rgba(59,130,246,0.06)" stroke="rgba(59,130,246,0.3)" stroke-width="1.2" stroke-dasharray="3,3"/>
-              <text x="67" y="32" fill="#93c5fd" font-size="9" font-family="JetBrains Mono" text-anchor="middle" font-weight="600">TẬP S</text>
-              <circle cx="50" cy="55" r="4.5" fill="#3b82f6"/>
-              <circle cx="85" cy="70" r="4.5" fill="#3b82f6"/>
-              
-              <rect x="200" y="15" width="105" height="80" rx="6" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.2)" stroke-width="1.2" stroke-dasharray="3,3"/>
-              <text x="252" y="32" fill="#c5cbd6" font-size="9" font-family="JetBrains Mono" text-anchor="middle" font-weight="600">TẬP V \ S</text>
-              <circle cx="235" cy="50" r="4.5" fill="#64748b"/>
-              <circle cx="270" cy="72" r="4.5" fill="#64748b"/>
-              
-              <line x1="160" y1="10" x2="160" y2="100" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="4,4"/>
-              <text x="160" y="106" fill="#ef4444" font-size="8" font-family="JetBrains Mono" text-anchor="middle">Lát cắt (Cut)</text>
-              
-              <line x1="85" y1="70" x2="235" y2="50" stroke="#34d399" stroke-width="2.2"/>
-              <rect x="145" y="52" width="30" height="13" fill="#090a0d" rx="2"/>
-              <text x="160" y="62" fill="#34d399" font-size="8.5" font-family="JetBrains Mono" text-anchor="middle" font-weight="bold">e*=2.5</text>
-              
-              <line x1="50" y1="55" x2="235" y2="50" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
-              <text x="135" y="44" fill="#64748b" font-size="8" font-family="JetBrains Mono" text-anchor="middle">w=7.0</text>
-              
-              <line x1="85" y1="70" x2="270" y2="72" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
-              <text x="180" y="82" fill="#64748b" font-size="8" font-family="JetBrains Mono" text-anchor="middle">w=8.2</text>
+              <rect x="15" y="15" width="105" height="80" rx="6" fill="rgba(59,130,246,0.06)"
+                stroke="rgba(59,130,246,0.3)" stroke-width="1.2" stroke-dasharray="3,3" />
+              <text x="67" y="32" fill="#93c5fd" font-size="9" font-family="JetBrains Mono" text-anchor="middle"
+                font-weight="600">TẬP S</text>
+              <circle cx="50" cy="55" r="4.5" fill="#3b82f6" />
+              <circle cx="85" cy="70" r="4.5" fill="#3b82f6" />
+
+              <rect x="200" y="15" width="105" height="80" rx="6" fill="rgba(255,255,255,0.03)"
+                stroke="rgba(255,255,255,0.2)" stroke-width="1.2" stroke-dasharray="3,3" />
+              <text x="252" y="32" fill="#c5cbd6" font-size="9" font-family="JetBrains Mono" text-anchor="middle"
+                font-weight="600">TẬP V \ S</text>
+              <circle cx="235" cy="50" r="4.5" fill="#64748b" />
+              <circle cx="270" cy="72" r="4.5" fill="#64748b" />
+
+              <line x1="160" y1="10" x2="160" y2="100" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="4,4" />
+              <text x="160" y="106" fill="#ef4444" font-size="8" font-family="JetBrains Mono" text-anchor="middle">Lát
+                cắt (Cut)</text>
+
+              <line x1="85" y1="70" x2="235" y2="50" stroke="#34d399" stroke-width="2.2" />
+              <rect x="145" y="52" width="30" height="13" fill="#090a0d" rx="2" />
+              <text x="160" y="62" fill="#34d399" font-size="8.5" font-family="JetBrains Mono" text-anchor="middle"
+                font-weight="bold">e*=2.5</text>
+
+              <line x1="50" y1="55" x2="235" y2="50" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+              <text x="135" y="44" fill="#64748b" font-size="8" font-family="JetBrains Mono"
+                text-anchor="middle">w=7.0</text>
+
+              <line x1="85" y1="70" x2="270" y2="72" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+              <text x="180" y="82" fill="#64748b" font-size="8" font-family="JetBrains Mono"
+                text-anchor="middle">w=8.2</text>
             </svg>
           </div>
         </div>
@@ -255,33 +285,37 @@
           <div class="card-num">PROPERTY 02 / CYCLE THEOREM</div>
           <h3 class="card-title">Tính Chất Chu Trình (Cycle Property)</h3>
           <p class="card-desc">
-            Trong một chu trình bất kỳ, <strong>cạnh có trọng số lớn nhất tuyệt đối sẽ không bao giờ xuất hiện trong bất kỳ cây MST nào</strong>.
+            Trong một chu trình bất kỳ, <strong>cạnh có trọng số lớn nhất tuyệt đối sẽ không bao giờ xuất hiện trong bất
+              kỳ cây MST nào</strong>.
           </p>
 
           <!-- SVG Diagram for Cycle Property -->
           <div class="theory-svg-wrap">
             <svg class="theory-svg" viewBox="0 0 320 110">
-              <circle cx="70" cy="35" r="4.5" fill="#64748b"/>
+              <circle cx="70" cy="35" r="4.5" fill="#64748b" />
               <text x="56" y="33" fill="#94a3b8" font-size="8.5" font-family="JetBrains Mono">A</text>
-              <circle cx="250" cy="35" r="4.5" fill="#64748b"/>
+              <circle cx="250" cy="35" r="4.5" fill="#64748b" />
               <text x="264" y="33" fill="#94a3b8" font-size="8.5" font-family="JetBrains Mono">B</text>
-              <circle cx="250" cy="85" r="4.5" fill="#64748b"/>
+              <circle cx="250" cy="85" r="4.5" fill="#64748b" />
               <text x="264" y="90" fill="#94a3b8" font-size="8.5" font-family="JetBrains Mono">C</text>
-              <circle cx="70" cy="85" r="4.5" fill="#64748b"/>
+              <circle cx="70" cy="85" r="4.5" fill="#64748b" />
               <text x="56" y="90" fill="#94a3b8" font-size="8.5" font-family="JetBrains Mono">D</text>
-              
-              <line x1="70" y1="35" x2="70" y2="85" stroke="#34d399" stroke-width="2"/>
-              <text x="53" y="62" fill="#34d399" font-size="8" font-family="JetBrains Mono" text-anchor="end">w=3.1</text>
-              
-              <line x1="70" y1="85" x2="250" y2="85" stroke="#34d399" stroke-width="2"/>
-              <text x="160" y="98" fill="#34d399" font-size="8" font-family="JetBrains Mono" text-anchor="middle">w=4.2</text>
-              
-              <line x1="250" y1="85" x2="250" y2="35" stroke="#34d399" stroke-width="2"/>
+
+              <line x1="70" y1="35" x2="70" y2="85" stroke="#34d399" stroke-width="2" />
+              <text x="53" y="62" fill="#34d399" font-size="8" font-family="JetBrains Mono"
+                text-anchor="end">w=3.1</text>
+
+              <line x1="70" y1="85" x2="250" y2="85" stroke="#34d399" stroke-width="2" />
+              <text x="160" y="98" fill="#34d399" font-size="8" font-family="JetBrains Mono"
+                text-anchor="middle">w=4.2</text>
+
+              <line x1="250" y1="85" x2="250" y2="35" stroke="#34d399" stroke-width="2" />
               <text x="266" y="62" fill="#34d399" font-size="8" font-family="JetBrains Mono">w=5.0</text>
-              
-              <line x1="70" y1="35" x2="250" y2="35" stroke="#ef4444" stroke-width="1.8" stroke-dasharray="3,3"/>
-              <rect x="135" y="27" width="54" height="15" fill="#090a0d" rx="2" stroke="rgba(239,68,68,0.4)"/>
-              <text x="162" y="38" fill="#ef4444" font-size="8" font-family="JetBrains Mono" text-anchor="middle" font-weight="bold">w=9.8 ∉ MST</text>
+
+              <line x1="70" y1="35" x2="250" y2="35" stroke="#ef4444" stroke-width="1.8" stroke-dasharray="3,3" />
+              <rect x="135" y="27" width="54" height="15" fill="#090a0d" rx="2" stroke="rgba(239,68,68,0.4)" />
+              <text x="162" y="38" fill="#ef4444" font-size="8" font-family="JetBrains Mono" text-anchor="middle"
+                font-weight="bold">w=9.8 ∉ MST</text>
             </svg>
           </div>
         </div>
@@ -291,14 +325,16 @@
         <div class="card" style="padding: 12px 18px;">
           <div style="font-size: 0.85rem; color: var(--text-1); font-weight: 500;">Tính Duy Nhất Của Cây Khung</div>
           <p style="font-size: 0.8rem; color: var(--text-3); margin-top: 2px;">
-            Nếu các cạnh có trọng số đôi một khác nhau, cây MST là duy nhất. Khi có cạnh trùng trọng số, tổng chi phí các cây luôn bằng nhau.
+            Nếu các cạnh có trọng số đôi một khác nhau, cây MST là duy nhất. Khi có cạnh trùng trọng số, tổng chi phí
+            các cây luôn bằng nhau.
           </p>
         </div>
 
         <div class="card" style="padding: 12px 18px;">
           <div style="font-size: 0.85rem; color: var(--text-1); font-weight: 500;">Khả Năng Xử Lý Trọng Số Âm</div>
           <p style="font-size: 0.8rem; color: var(--text-3); margin-top: 2px;">
-            Kruskal, Prim và Borůvka đều đúng trên cạnh âm vì chỉ so sánh độ lớn hơn kém giữa các cạnh, khác với Dijkstra bị sai.
+            Kruskal, Prim và Borůvka đều đúng trên cạnh âm vì chỉ so sánh độ lớn hơn kém giữa các cạnh, khác với
+            Dijkstra bị sai.
           </p>
         </div>
       </div>
@@ -306,13 +342,16 @@
 
     <!-- SLIDE 5: BORUVKA ALGORITHM WITH PROGRESSION -->
     <section class="slide" id="slide-5">
-      <div class="slide-header" style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;">
+      <div class="slide-header"
+        style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;">
         <div>
           <div class="slide-category">04 / Thuật toán tiền nhiệm</div>
           <h2 class="slide-title">Thuật Toán Borůvka (1926) & Tính Song Song</h2>
-          <p class="slide-subtitle">Thuật toán MST đầu tiên trong lịch sử, ra đời phục vụ tối ưu chi phí lưới điện vùng Moravia.</p>
+          <p class="slide-subtitle">Thuật toán MST đầu tiên trong lịch sử, ra đời phục vụ tối ưu chi phí lưới điện vùng
+            Moravia.</p>
         </div>
-        <button class="jump-to-viz-btn" onclick="jumpToVisualizer('boruvka')" title="Chuyển tới Slide 9 và xem mô phỏng 2.5D của thuật toán Borůvka">
+        <button class="jump-to-viz-btn" onclick="jumpToVisualizer('boruvka')"
+          title="Chuyển tới Slide 9 và xem mô phỏng 2.5D của thuật toán Borůvka">
           <span class="jump-icon">▷</span> Xem trực quan 2.5D
         </button>
       </div>
@@ -325,25 +364,29 @@
             <li class="minimal-list-item">
               <span class="list-num">01.</span>
               <div>
-                <strong>Khởi tạo:</strong> Mỗi đỉnh là một thành phần liên thông độc lập (<span class="math"><i>V</i></span> components).
+                <strong>Khởi tạo:</strong> Mỗi đỉnh là một thành phần liên thông độc lập (<span
+                  class="math"><i>V</i></span> components).
               </div>
             </li>
             <li class="minimal-list-item">
               <span class="list-num">02.</span>
               <div>
-                <strong>Tìm kiếm song song:</strong> Trong mỗi vòng, với <em>mọi component</em>, đồng thời tìm cạnh rẻ nhất nối ra ngoài (Cheapest Outgoing Edge).
+                <strong>Tìm kiếm song song:</strong> Trong mỗi vòng, với <em>mọi component</em>, đồng thời tìm cạnh rẻ
+                nhất nối ra ngoài (Cheapest Outgoing Edge).
               </div>
             </li>
             <li class="minimal-list-item">
               <span class="list-num">03.</span>
               <div>
-                <strong>Gộp tập hợp:</strong> Nạp các cạnh rẻ nhất vào cây khung và hợp nhất các component bằng cấu trúc DSU.
+                <strong>Gộp tập hợp:</strong> Nạp các cạnh rẻ nhất vào cây khung và hợp nhất các component bằng cấu trúc
+                DSU.
               </div>
             </li>
             <li class="minimal-list-item">
               <span class="list-num">04.</span>
               <div>
-                <strong>Dừng:</strong> Khi chỉ còn 1 component (đồ thị liên thông) hoặc không còn cạnh liên kết ngoài (Rừng MST).
+                <strong>Dừng:</strong> Khi chỉ còn 1 component (đồ thị liên thông) hoặc không còn cạnh liên kết ngoài
+                (Rừng MST).
               </div>
             </li>
           </ul>
@@ -353,7 +396,7 @@
           <div>
             <div class="card-num">THEORETICAL BOUNDS</div>
             <h3 class="card-title">Cơ Chế Giảm Nửa Thành Phần</h3>
-            
+
             <!-- Timeline progression -->
             <div class="timeline-track">
               <div class="timeline-step">
@@ -376,12 +419,15 @@
             </div>
           </div>
 
-          <div style="margin-top: 14px; padding: 12px; background: var(--bg-subtle); border: 1px solid var(--border); border-radius: var(--radius-xs);">
+          <div
+            style="margin-top: 14px; padding: 12px; background: var(--bg-subtle); border: 1px solid var(--border); border-radius: var(--radius-xs);">
             <div style="font-size: 0.85rem; color: var(--text-1); font-weight: 500;">
-              Số vòng lặp: <span class="math">Rounds ≤ ⌈log<sub>2</sub> <i>V</i>⌉</span> · Thời gian: <span class="math"><i>O</i>(<i>E</i> log <i>V</i>)</span>
+              Số vòng lặp: <span class="math">Rounds ≤ ⌈log<sub>2</sub> <i>V</i>⌉</span> · Thời gian: <span
+                class="math"><i>O</i>(<i>E</i> log <i>V</i>)</span>
             </div>
             <div style="font-size: 0.78rem; color: var(--text-3); margin-top: 4px;">
-              Các cụm độc lập hoàn toàn trong mỗi vòng, tạo lợi thế tuyệt đối khi triển khai trên hệ thống phân tán (Distributed / GPU Graph Computing).
+              Các cụm độc lập hoàn toàn trong mỗi vòng, tạo lợi thế tuyệt đối khi triển khai trên hệ thống phân tán
+              (Distributed / GPU Graph Computing).
             </div>
           </div>
         </div>
@@ -390,13 +436,16 @@
 
     <!-- SLIDE 6: KRUSKAL ALGORITHM & DSU TABS -->
     <section class="slide" id="slide-6">
-      <div class="slide-header" style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;">
+      <div class="slide-header"
+        style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;">
         <div>
           <div class="slide-category">05 / Thuật toán Kruskal</div>
           <h2 class="slide-title">Kruskal & Tối Ưu Hóa Disjoint Set Union (DSU)</h2>
-          <p class="slide-subtitle">Chiến lược tham lam theo cạnh kết hợp 2 kỹ thuật tối ưu kinh điển: Path Compression & Union by Rank.</p>
+          <p class="slide-subtitle">Chiến lược tham lam theo cạnh kết hợp 2 kỹ thuật tối ưu kinh điển: Path Compression
+            & Union by Rank.</p>
         </div>
-        <button class="jump-to-viz-btn" onclick="jumpToVisualizer('kruskal')" title="Chuyển tới Slide 9 và xem mô phỏng 2.5D của thuật toán Kruskal">
+        <button class="jump-to-viz-btn" onclick="jumpToVisualizer('kruskal')"
+          title="Chuyển tới Slide 9 và xem mô phỏng 2.5D của thuật toán Kruskal">
           <span class="jump-icon">▷</span> Xem trực quan 2.5D
         </button>
       </div>
@@ -406,25 +455,29 @@
           <div class="card-num">UNION-FIND OPTIMIZATIONS</div>
           <h3 class="card-title">Cấu Trúc Tự Cài Đặt (No External Libs)</h3>
           <p class="card-desc" style="margin-bottom: 14px;">
-            Nhóm tự cài đặt cấu trúc DSU từ đầu để kiểm tra chu trình và gộp tập hợp đỉnh trong thời gian gần như hằng số:
+            Nhóm tự cài đặt cấu trúc DSU từ đầu để kiểm tra chu trình và gộp tập hợp đỉnh trong thời gian gần như hằng
+            số:
           </p>
           <ul class="minimal-list">
             <li class="minimal-list-item">
               <span class="list-num">01.</span>
               <div>
-                <strong>Path Compression (Nén đường đi):</strong> Khi gọi <code>find(u)</code>, trỏ trực tiếp nút và các nút cha về nút gốc.
+                <strong>Path Compression (Nén đường đi):</strong> Khi gọi <code>find(u)</code>, trỏ trực tiếp nút và các
+                nút cha về nút gốc.
               </div>
             </li>
             <li class="minimal-list-item">
               <span class="list-num">02.</span>
               <div>
-                <strong>Union by Rank (Gộp theo hạng):</strong> Luôn gắn gốc của cây có độ cao nhỏ hơn vào gốc cây cao hơn để tránh thoái hóa.
+                <strong>Union by Rank (Gộp theo hạng):</strong> Luôn gắn gốc của cây có độ cao nhỏ hơn vào gốc cây cao
+                hơn để tránh thoái hóa.
               </div>
             </li>
             <li class="minimal-list-item">
               <span class="list-num">03.</span>
               <div>
-                <strong>Độ phức tạp Ackermann:</strong> Mỗi thao tác chỉ tốn <span class="math"><i>O</i>(α(<i>V</i>)) ≤ 4 ≈ <i>O</i>(1)</span>.
+                <strong>Độ phức tạp Ackermann:</strong> Mỗi thao tác chỉ tốn <span class="math"><i>O</i>(α(<i>V</i>)) ≤
+                  4 ≈ <i>O</i>(1)</span>.
               </div>
             </li>
           </ul>
@@ -438,21 +491,25 @@
           </div>
 
           <div class="code-container" style="margin-top: 0; border-top: none;">
-            <div class="code-content" id="kruskalCodeSnippet"><span class="code-comment"># Sắp xếp toàn bộ cạnh theo trọng số: O(E log E)</span>
-edges.sort(key=<span class="code-keyword">lambda</span> e: e[<span class="code-string">'weight'</span>])
-dsu = DSU(num_nodes)
-mst_edges = []
+            <div class="code-content" id="kruskalCodeSnippet"><span class="code-comment"># Sắp xếp toàn bộ cạnh theo
+                trọng số: O(E log E)</span>
+              edges.sort(key=<span class="code-keyword">lambda</span> e: e[<span class="code-string">'weight'</span>])
+              dsu = DSU(num_nodes)
+              mst_edges = []
 
-<span class="code-keyword">for</span> edge <span class="code-keyword">in</span> edges:
-    <span class="code-keyword">if</span> dsu.union(edge[<span class="code-string">'u'</span>], edge[<span class="code-string">'v'</span>]):
-        mst_edges.append(edge)
-        total_weight += edge[<span class="code-string">'weight'</span>]
-        <span class="code-keyword">if</span> len(mst_edges) == num_nodes - 1:
-            <span class="code-keyword">break</span> <span class="code-comment"># Dừng sớm khi đủ cạnh</span></div>
+              <span class="code-keyword">for</span> edge <span class="code-keyword">in</span> edges:
+              <span class="code-keyword">if</span> dsu.union(edge[<span class="code-string">'u'</span>], edge[<span
+                class="code-string">'v'</span>]):
+              mst_edges.append(edge)
+              total_weight += edge[<span class="code-string">'weight'</span>]
+              <span class="code-keyword">if</span> len(mst_edges) == num_nodes - 1:
+              <span class="code-keyword">break</span> <span class="code-comment"># Dừng sớm khi đủ V - 1 cạnh</span>
+            </div>
           </div>
 
           <div style="margin-top: 10px; font-size: 0.82rem; color: var(--text-3);">
-            Độ phức tạp: <span class="math"><i>O</i>(<i>E</i> log <i>E</i> + <i>E</i> · α(<i>V</i>)) ≈ <i>O</i>(<i>E</i> log <i>V</i>)</span>.
+            Độ phức tạp: <span class="math"><i>O</i>(<i>E</i> log <i>E</i> + <i>E</i> · α(<i>V</i>)) ≈ <i>O</i>(<i>E</i>
+              log <i>V</i>)</span>.
           </div>
         </div>
       </div>
@@ -460,13 +517,16 @@ mst_edges = []
 
     <!-- SLIDE 7: PRIM ALGORITHM & HEAP COMPARISON -->
     <section class="slide" id="slide-7">
-      <div class="slide-header" style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;">
+      <div class="slide-header"
+        style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;">
         <div>
           <div class="slide-category">06 / Thuật toán Prim</div>
           <h2 class="slide-title">Prim & Hàng Đợi Ưu Tiên (Lazy vs Eager)</h2>
-          <p class="slide-subtitle">Nuôi lớn một cây liên thông duy nhất từ 1 đỉnh và tối ưu bộ nhớ với IndexedMinHeap.</p>
+          <p class="slide-subtitle">Nuôi lớn một cây liên thông duy nhất từ 1 đỉnh và tối ưu bộ nhớ với IndexedMinHeap.
+          </p>
         </div>
-        <button class="jump-to-viz-btn" onclick="jumpToVisualizer('prim')" title="Chuyển tới Slide 9 và xem mô phỏng 2.5D của thuật toán Prim">
+        <button class="jump-to-viz-btn" onclick="jumpToVisualizer('prim')"
+          title="Chuyển tới Slide 9 và xem mô phỏng 2.5D của thuật toán Prim">
           <span class="jump-icon">▷</span> Xem trực quan 2.5D
         </button>
       </div>
@@ -479,22 +539,26 @@ mst_edges = []
             <li class="minimal-list-item">
               <span class="list-num">•</span>
               <div>
-                <strong>Cơ chế:</strong> Khi nạp đỉnh <span class="math"><i>u</i></span> vào cây, đẩy toàn bộ cạnh kề <span class="math">(<i>w</i>, <i>v</i>)</span> vào MinHeap.
+                <strong>Cơ chế:</strong> Khi nạp đỉnh <span class="math"><i>u</i></span> vào cây, đẩy toàn bộ cạnh kề
+                <span class="math">(<i>w</i>, <i>v</i>)</span> vào MinHeap.
               </div>
             </li>
             <li class="minimal-list-item">
               <span class="list-num">•</span>
               <div>
-                <strong>Bỏ qua cạnh cũ:</strong> Khi lấy ra khỏi Heap, nếu đỉnh <span class="math"><i>v</i></span> đã vào cây thì bỏ qua (Lazy deletion).
+                <strong>Bỏ qua cạnh cũ:</strong> Khi lấy ra khỏi Heap, nếu đỉnh <span class="math"><i>v</i></span> đã
+                vào cây thì bỏ qua (Lazy deletion).
               </div>
             </li>
           </ul>
 
           <div class="code-container" style="margin-top: 10px;">
             <div class="code-header"><span>Lazy Prim: Push All Edges</span></div>
-            <div class="code-content"><span class="code-keyword">for</span> weight, to_node <span class="code-keyword">in</span> adj[u]:
-    <span class="code-keyword">if</span> to_node <span class="code-keyword">not in</span> visited:
-        pq.push((weight, to_node, u)) <span class="code-comment"># Lưu O(E) cạnh</span></div>
+            <div class="code-content"><span class="code-keyword">for</span> weight, to_node <span
+                class="code-keyword">in</span> adj[u]:
+              <span class="code-keyword">if</span> to_node <span class="code-keyword">not in</span> visited:
+              pq.push((weight, to_node, u)) <span class="code-comment"># Lưu O(E) cạnh</span>
+            </div>
           </div>
         </div>
 
@@ -505,13 +569,15 @@ mst_edges = []
             <li class="minimal-list-item">
               <span class="list-num">•</span>
               <div>
-                <strong>Cơ chế:</strong> Chỉ lưu các đỉnh chưa vào cây kèm khoảng cách ngắn nhất hiện tại nối vào cây (<code>dist_to[v]</code>).
+                <strong>Cơ chế:</strong> Chỉ lưu các đỉnh chưa vào cây kèm khoảng cách ngắn nhất hiện tại nối vào cây
+                (<code>dist_to[v]</code>).
               </div>
             </li>
             <li class="minimal-list-item">
               <span class="list-num">•</span>
               <div>
-                <strong>Thao tác decrease_key:</strong> Cập nhật trực tiếp vị trí đỉnh trong Heap khi tìm thấy cạnh rẻ hơn.
+                <strong>Thao tác decrease_key:</strong> Cập nhật trực tiếp vị trí đỉnh trong Heap khi tìm thấy cạnh rẻ
+                hơn.
               </div>
             </li>
           </ul>
@@ -519,8 +585,8 @@ mst_edges = []
           <div class="code-container" style="margin-top: 10px;">
             <div class="code-header"><span>Eager Prim: decrease_key</span></div>
             <div class="code-content"><span class="code-keyword">if</span> weight &lt; dist_to[v]:
-    dist_to[v] = weight
-    pq.decrease_key(v, weight) <span class="code-comment"># Tối ưu O(V) đỉnh</span></div>
+              dist_to[v] = weight
+              pq.decrease_key(v, weight) <span class="code-comment"># Tối ưu O(V) đỉnh</span></div>
           </div>
         </div>
       </div>
@@ -528,17 +594,27 @@ mst_edges = []
       <div class="card" style="margin-top: 14px; padding: 12px 18px;">
         <div style="font-size: 0.85rem; color: var(--text-1); font-weight: 500;">Ưu Điểm Thực Tiễn Trong Logistics</div>
         <p style="font-size: 0.8rem; color: var(--text-3); margin-top: 2px;">
-          Cây luôn là <strong>một cây liên thông duy nhất</strong> ở mọi bước trung gian. Cho phép đơn vị thi công hoàn thành tuyến nào là có thể đưa vào vận hành ngay tuyến đó.
+          Cây luôn là <strong>một cây liên thông duy nhất</strong> ở mọi bước trung gian. Cho phép đơn vị thi công hoàn
+          thành tuyến nào là có thể đưa vào vận hành ngay tuyến đó.
         </p>
       </div>
     </section>
 
     <!-- SLIDE 8: INTERACTIVE COMPARISON MATRIX -->
     <section class="slide" id="slide-8">
-      <div class="slide-header">
-        <div class="slide-category">07 / So sánh & Đánh giá</div>
-        <h2 class="slide-title">Ma Trận So Sánh: Borůvka vs Kruskal vs Prim</h2>
-        <p class="slide-subtitle">Lựa chọn giải thuật tối ưu theo đặc thù mật độ mạng lưới và cấu trúc dữ liệu đầu vào.</p>
+      <div class="slide-header"
+        style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;">
+        <div>
+          <div class="slide-category">07 / So sánh & Đánh giá</div>
+          <h2 class="slide-title">Ma Trận So Sánh: Borůvka vs Kruskal vs Prim</h2>
+          <p class="slide-subtitle">Lựa chọn giải thuật tối ưu theo đặc thù mật độ mạng lưới và cấu trúc dữ liệu đầu
+            vào.
+          </p>
+        </div>
+        <button class="jump-to-viz-btn" onclick="goToSlide(11)"
+          title="Chuyển tới Slide 11 xem biểu đồ benchmark đo tốc độ 3 thuật toán">
+          <span class="jump-icon">📊</span> Biểu đồ Tốc độ (Slide 11)
+        </button>
       </div>
 
       <div class="matrix-filter-bar">
@@ -577,9 +653,12 @@ mst_edges = []
           </tr>
           <tr>
             <td><strong>Thời gian chạy</strong></td>
-            <td class="col-boruvka"><span class="tag-clean"><span class="math"><i>O</i>(<i>E</i> log <i>V</i>)</span></span></td>
-            <td class="col-kruskal"><span class="tag-clean"><span class="math"><i>O</i>(<i>E</i> log <i>E</i>)</span></span></td>
-            <td class="col-prim"><span class="tag-clean"><span class="math"><i>O</i>(<i>E</i> log <i>V</i>)</span></span></td>
+            <td class="col-boruvka"><span class="tag-clean"><span class="math"><i>O</i>(<i>E</i> log
+                  <i>V</i>)</span></span></td>
+            <td class="col-kruskal"><span class="tag-clean"><span class="math"><i>O</i>(<i>E</i> log
+                  <i>E</i>)</span></span></td>
+            <td class="col-prim"><span class="tag-clean"><span class="math"><i>O</i>(<i>E</i> log
+                  <i>V</i>)</span></span></td>
           </tr>
           <tr>
             <td><strong>Bộ nhớ bổ sung</strong></td>
@@ -630,7 +709,8 @@ mst_edges = []
           </div>
           <h2 class="algo-main-title slide-title" id="algoMainTitle">Kruskal's Algorithm (MST + DSU)</h2>
           <p class="algo-main-desc" id="algoMainDesc">
-            Xây dựng Cây bao trùm nhỏ nhất bằng cách quét toàn bộ cạnh tăng dần, kết hợp Disjoint Set Union (DSU) nén đường đi để loại bỏ chu trình.
+            Xây dựng Cây bao trùm nhỏ nhất bằng cách quét toàn bộ cạnh tăng dần, kết hợp Disjoint Set Union (DSU) nén
+            đường đi để loại bỏ chu trình.
           </p>
         </div>
 
@@ -648,10 +728,12 @@ mst_edges = []
             </div>
           </div>
           <div class="algo-view-actions">
-            <button class="algo-action-btn active" id="btnToggleIsoView" title="Chuyển đổi góc nhìn 2.5D Isometric / 2D Phẳng">
+            <button class="algo-action-btn active" id="btnToggleIsoView"
+              title="Chuyển đổi góc nhìn 2.5D Isometric / 2D Phẳng">
               <span class="btn-icon">❖</span> <span id="isoBtnText">2.5D Isometric</span>
             </button>
-            <button class="algo-action-btn" id="btnToggleLayout" title="Chuyển đổi giữa Bố cục Song song (Split) và Dọc (Stacked kiểu Reels)">
+            <button class="algo-action-btn" id="btnToggleLayout"
+              title="Chuyển đổi giữa Bố cục Song song (Split) và Dọc (Stacked kiểu Reels)">
               <span class="btn-icon">◫</span> <span id="layoutBtnText">Split View</span>
             </button>
             <button class="algo-action-btn" id="btnTheaterMode" title="Mở rộng toàn màn hình (Theater Mode)">
@@ -663,10 +745,10 @@ mst_edges = []
 
       <!-- Main Visualizer Studio Layout (Split Studio / Stacked Reel) -->
       <div class="algo-studio-layout" id="algoStudioLayout">
-        
+
         <!-- Left Column: Visual Canvas + State Bar + Controls -->
         <div class="algo-canvas-column">
-          
+
           <!-- State Bar: Variables & Array/Stack Badges -->
           <div class="algo-state-bar">
             <div class="state-vars-group">
@@ -693,6 +775,21 @@ mst_edges = []
           <!-- Central Visual Canvas: Isometric 2.5D Dark Grid Platform -->
           <div class="algo-canvas-wrapper" id="algoCanvasWrapper">
             <div class="canvas-ambient-glow"></div>
+
+            <!-- Interactive Drag & Zoom Hint Pill -->
+            <div class="canvas-drag-hint">✋ Kéo thả điểm · Cuộn để Zoom</div>
+
+            <!-- Floating Zoom & Pan Controls Dock -->
+            <div class="canvas-zoom-dock" id="canvasZoomDock">
+              <button class="zoom-btn" id="btnZoomIn" title="Phóng to (Phím + / Lăn chuột lên)">+</button>
+              <button class="zoom-btn zoom-level-badge" id="btnZoomReset"
+                title="Đặt lại thu phóng 100% (Nháy đúp vào nền)">100%</button>
+              <button class="zoom-btn" id="btnZoomOut" title="Thu nhỏ (Phím - / Lăn chuột xuống)">−</button>
+              <button class="zoom-btn" id="btnZoomFit" title="Vừa khung nhìn (Fit View)">⛶</button>
+              <button class="zoom-btn" id="btnResetNodes"
+                title="Khôi phục vị trí mặc định các điểm trên lưới">⌖</button>
+            </div>
+
             <svg class="algo-isometric-svg" id="algoIsoSvg" viewBox="0 0 840 460" preserveAspectRatio="xMidYMid meet">
               <defs>
                 <!-- 2.5D Lighting & Shadow Defs -->
@@ -709,7 +806,7 @@ mst_edges = []
                   <stop offset="0%" stop-color="#141c2c" />
                   <stop offset="100%" stop-color="#070a12" />
                 </linearGradient>
-                
+
                 <!-- Glow Filters for CodePeet Neon Style -->
                 <filter id="glowCyan" x="-50%" y="-50%" width="200%" height="200%">
                   <feGaussianBlur stdDeviation="4.5" result="blur" />
@@ -740,17 +837,20 @@ mst_edges = []
                 </filter>
               </defs>
 
-              <!-- Isometric Rendering Layers -->
-              <g id="isoPlatformShadowGroup"></g>
-              <g id="isoPodiumSidesGroup"></g>
-              <g id="isoPlatformFloorGroup"></g>
-              <g id="isoGridLinesGroup"></g>
-              <g id="isoFloorShadowsGroup"></g>
-              <g id="isoHullFillGroup"></g>
-              <g id="isoConnectionsGroup"></g>
-              <g id="isoTethersGroup"></g>
-              <g id="isoNodesGroup"></g>
-              <g id="isoOverlayLabelsGroup"></g>
+              <!-- Zoom & Pan Interactive Container -->
+              <g id="isoZoomContainer" transform="translate(0, 0) scale(1)">
+                <!-- Isometric Rendering Layers -->
+                <g id="isoPlatformShadowGroup"></g>
+                <g id="isoPodiumSidesGroup"></g>
+                <g id="isoPlatformFloorGroup"></g>
+                <g id="isoGridLinesGroup"></g>
+                <g id="isoFloorShadowsGroup"></g>
+                <g id="isoHullFillGroup"></g>
+                <g id="isoConnectionsGroup"></g>
+                <g id="isoTethersGroup"></g>
+                <g id="isoNodesGroup"></g>
+                <g id="isoOverlayLabelsGroup"></g>
+              </g>
             </svg>
 
             <!-- Bottom Floating Canvas Legend -->
@@ -766,14 +866,16 @@ mst_edges = []
           <!-- Step Narration & Quick Status -->
           <div class="algo-narrative-bar">
             <span class="narrative-step-icon">⚡</span>
-            <span class="narrative-text" id="algoNarrativeText">Sẵn sàng thực thi. Bấm [Bước tiếp ⏭] hoặc [Auto Play ▶] để bắt đầu mô phỏng.</span>
+            <span class="narrative-text" id="algoNarrativeText">Sẵn sàng thực thi. Bấm [Bước tiếp ⏭] hoặc [Auto Play ▶]
+              để bắt đầu mô phỏng.</span>
           </div>
 
           <!-- Execution Controls Bar: Step, Play, Reset, Speed Slider -->
           <div class="algo-controls-dock">
             <div class="controls-playback-group">
               <button class="ctrl-btn" id="ctrlPrevStepBtn" title="Lùi 1 bước (Phím [)">⏮ Lùi bước</button>
-              <button class="ctrl-btn primary" id="ctrlAutoPlayBtn" title="Tự động chạy / Tạm dừng (Phím Space)">▶ Auto Play</button>
+              <button class="ctrl-btn primary" id="ctrlAutoPlayBtn" title="Tự động chạy / Tạm dừng (Phím Space)">▶ Auto
+                Play</button>
               <button class="ctrl-btn" id="ctrlNextStepBtn" title="Tiến 1 bước (Phím ])">Bước tiếp ⏭</button>
               <button class="ctrl-btn subtle" id="ctrlResetBtn" title="Đặt lại từ đầu (Phím R)">↺ Đặt lại</button>
               <button class="ctrl-btn subtle" id="ctrlRandomBtn" title="Khởi tạo lại mô phỏng">↺ Chạy lại</button>
@@ -783,12 +885,14 @@ mst_edges = []
             <div class="controls-scrubber-group">
               <div class="step-progress-wrapper">
                 <span class="step-badge" id="stepCounterBadge">Step 00 / 00</span>
-                <input type="range" class="step-scrubber-slider" id="stepScrubber" min="0" max="0" value="0" title="Kéo thanh trượt để nhảy tới bước bất kỳ">
+                <input type="range" class="step-scrubber-slider" id="stepScrubber" min="0" max="0" value="0"
+                  title="Kéo thanh trượt để nhảy tới bước bất kỳ">
               </div>
 
               <div class="speed-slider-wrapper">
                 <span class="speed-label" id="speedLabel">1.0x (700ms)</span>
-                <input type="range" class="speed-range-slider" id="speedSlider" min="200" max="1800" step="100" value="700" title="Điều chỉnh tốc độ thực thi">
+                <input type="range" class="speed-range-slider" id="speedSlider" min="200" max="1800" step="100"
+                  value="700" title="Điều chỉnh tốc độ thực thi">
               </div>
             </div>
           </div>
@@ -811,6 +915,7 @@ mst_edges = []
                 </div>
               </div>
               <div class="macos-window-actions">
+                <button class="code-copy-btn" id="codeCopyBtn" title="Sao chép toàn bộ code thuật toán">📋 Copy</button>
                 <span class="code-badge-pill" id="activeLineIndicator">Line 01</span>
               </div>
             </div>
@@ -846,7 +951,8 @@ mst_edges = []
       <div class="slide-header">
         <div class="slide-category">09 / Thực nghiệm thực tế</div>
         <h2 class="slide-title">Case Study: Mạng Lưới Bưu Chính Hà Nội</h2>
-        <p class="slide-subtitle">Bản đồ thực nghiệm 22 nút bưu chính trọng điểm và 30 tuyến đường tiềm năng tại Thủ đô.</p>
+        <p class="slide-subtitle">Bản đồ thực nghiệm 22 nút bưu chính trọng điểm và 30 tuyến đường tiềm năng tại Thủ đô.
+        </p>
       </div>
 
       <div class="hanoi-layout">
@@ -854,33 +960,47 @@ mst_edges = []
         <div class="hanoi-map-panel">
           <div class="hanoi-map-header">
             <div style="display: flex; align-items: center; gap: 5px; flex-wrap: wrap;">
-              <span style="font-weight: 600; color: var(--text-1); font-size: 0.72rem; letter-spacing: 0.5px; margin-right: 2px;">HANOI MAP</span>
+              <span
+                style="font-weight: 600; color: var(--text-1); font-size: 0.72rem; letter-spacing: 0.5px; margin-right: 2px;">HANOI
+                MAP</span>
               <button class="tier-pill active" id="tierAllBtn" title="Hiển thị tất cả 22 trạm">Tất cả (22)</button>
               <button class="tier-pill" id="tierHubBtn" title="3 Mega Hubs" style="color: #60a5fa;">Hubs (3)</button>
-              <button class="tier-pill" id="tierWarehouseBtn" title="9 Warehouses/DCs" style="color: #93c5fd;">DCs (9)</button>
-              <button class="tier-pill" id="tierDeliveryBtn" title="10 Bưu cục phát" style="color: #cbd5e1;">Posts (10)</button>
+              <button class="tier-pill" id="tierWarehouseBtn" title="9 Warehouses/DCs" style="color: #93c5fd;">DCs
+                (9)</button>
+              <button class="tier-pill" id="tierDeliveryBtn" title="10 Bưu cục phát" style="color: #cbd5e1;">Posts
+                (10)</button>
             </div>
             <div style="display: flex; gap: 5px; align-items: center; flex-wrap: wrap;">
-              <button class="filter-pill active" id="hanoiBtnMst" title="Chỉ hiển thị 21 tuyến trục MST">[ Cây MST: 21 ]</button>
-              <button class="filter-pill" id="hanoiBtnAll" title="Hiển thị toàn bộ 30 tuyến ban đầu">[ Mạng Gốc: 30 ]</button>
-              <button class="filter-pill" id="hanoiBtnPathMode" title="Chế độ chọn 2 trạm để tìm đường trên cây MST">[ 🔍 Tìm đường ]</button>
-              <button class="minimal-btn" id="hanoiToggleWeightsBtn" style="padding: 2px 7px; font-size: 0.68rem;" title="Bật/Tắt hiển thị số km trên toàn bộ cạnh">[ km: Tự động ]</button>
-              <button class="minimal-btn" id="hanoiLayoutToggleBtn" style="padding: 2px 7px; font-size: 0.68rem;" title="Chuyển đổi giữa Bố cục Giãn đều trực quan và Tọa độ GPS chuẩn">[ ✦ Giãn đều ]</button>
-              <button class="minimal-btn" id="hanoiResetLayoutBtn" style="padding: 2px 7px; font-size: 0.68rem;" title="Khôi phục vị trí đỉnh mặc định">[ ↺ Reset ]</button>
+              <button class="filter-pill active" id="hanoiBtnMst" title="Chỉ hiển thị 21 tuyến trục MST">[ Cây MST: 21
+                ]</button>
+              <button class="filter-pill" id="hanoiBtnAll" title="Hiển thị toàn bộ 30 tuyến ban đầu">[ Mạng Gốc: 30
+                ]</button>
+              <button class="filter-pill" id="hanoiBtnPathMode" title="Chế độ chọn 2 trạm để tìm đường trên cây MST">[
+                🔍 Tìm đường ]</button>
+              <button class="minimal-btn" id="hanoiToggleWeightsBtn" style="padding: 2px 7px; font-size: 0.68rem;"
+                title="Bật/Tắt hiển thị số km trên toàn bộ cạnh">[ km: Tự động ]</button>
+              <button class="minimal-btn" id="hanoiLayoutToggleBtn" style="padding: 2px 7px; font-size: 0.68rem;"
+                title="Chuyển đổi giữa Bố cục Giãn đều trực quan và Tọa độ GPS chuẩn">[ ✦ Giãn đều ]</button>
+              <button class="minimal-btn" id="hanoiResetLayoutBtn" style="padding: 2px 7px; font-size: 0.68rem;"
+                title="Khôi phục vị trí đỉnh mặc định">[ ↺ Reset ]</button>
             </div>
           </div>
           <svg class="hanoi-svg" id="hanoiSvg" viewBox="0 0 520 340"></svg>
           <div class="canvas-footer" style="display: flex; align-items: center; justify-content: space-between;">
-            <span id="hanoiStatus">Đang hiển thị 21 tuyến trục MST (138.2 km). Rê chuột hoặc click trạm để tương tác.</span>
-            <span class="tag-clean" style="font-size: 0.62rem; color: var(--text-3); white-space: nowrap;">✋ Kéo thả đỉnh · Click trạm soi chi tiết / tìm đường</span>
+            <span id="hanoiStatus">Đang hiển thị 21 tuyến trục MST (138.2 km). Rê chuột hoặc click trạm để tương
+              tác.</span>
+            <span class="tag-clean" style="font-size: 0.62rem; color: var(--text-3); white-space: nowrap;">✋ Kéo thả
+              đỉnh · Click trạm soi chi tiết / tìm đường</span>
           </div>
         </div>
 
         <!-- Right Side: Interactive Tabs for Quantitative Results, Inspector/Pathfinder, and Kruskal Simulator -->
         <div class="hanoi-tabs-card">
           <div class="hanoi-tab-bar">
-            <button class="hanoi-tab-btn active" id="tabBtnHanoiResults" data-tab="tabHanoiResults">📊 Định Lượng</button>
-            <button class="hanoi-tab-btn" id="tabBtnHanoiInspector" data-tab="tabHanoiInspector">🔍 Chi Tiết & Lộ Trình</button>
+            <button class="hanoi-tab-btn active" id="tabBtnHanoiResults" data-tab="tabHanoiResults">📊 Định
+              Lượng</button>
+            <button class="hanoi-tab-btn" id="tabBtnHanoiInspector" data-tab="tabHanoiInspector">🔍 Chi Tiết & Lộ
+              Trình</button>
             <button class="hanoi-tab-btn" id="tabBtnHanoiSim" data-tab="tabHanoiSim">▷ Chạy Kruskal (22 nút)</button>
           </div>
 
@@ -912,15 +1032,21 @@ mst_edges = []
                 <div style="margin-top: 14px;">
                   <div class="card-num">3 PHÂN TẦNG ĐIỂM NÚT</div>
                   <div style="font-size: 0.8rem; color: var(--text-2); line-height: 1.55;">
-                    <div><span style="color: #3b82f6;">●</span> <strong>Mega Hubs (3 trạm):</strong> Long Biên SOC, Bắc Từ Liêm, Quang Minh.</div>
-                    <div><span style="color: #60a5fa;">●</span> <strong>Warehouses (9 trạm):</strong> Cầu Giấy, Đống Đa, Hà Đông, Hoàng Mai, Thanh Trì, Gia Lâm, Nam Từ Liêm, Tây Hồ, Đông Anh.</div>
-                    <div><span style="color: #94a3b8;">●</span> <strong>Delivery Points (10 trạm):</strong> Hoàn Kiếm, Ba Đình, Hai Bà Trưng, Thanh Xuân, Sóc Sơn, Hoài Đức, Đan Phượng, Chương Mỹ, Thường Tín, Hòa Lạc.</div>
+                    <div><span style="color: #3b82f6;">●</span> <strong>Mega Hubs (3 trạm):</strong> Long Biên SOC, Bắc
+                      Từ Liêm, Quang Minh.</div>
+                    <div><span style="color: #60a5fa;">●</span> <strong>Warehouses (9 trạm):</strong> Cầu Giấy, Đống Đa,
+                      Hà Đông, Hoàng Mai, Thanh Trì, Gia Lâm, Nam Từ Liêm, Tây Hồ, Đông Anh.</div>
+                    <div><span style="color: #94a3b8;">●</span> <strong>Delivery Points (10 trạm):</strong> Hoàn Kiếm,
+                      Ba Đình, Hai Bà Trưng, Thanh Xuân, Sóc Sơn, Hoài Đức, Đan Phượng, Chương Mỹ, Thường Tín, Hòa Lạc.
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 0.82rem; color: var(--text-2);">
-                Giảm thiểu <strong>41.5%</strong> chi phí đầu tư hạ tầng (tiết kiệm 98.2 km đường trục) mà vẫn bảo đảm 100% tính liên thông giữa toàn bộ 22 trạm bưu cục.
+              <div
+                style="margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 0.82rem; color: var(--text-2);">
+                Giảm thiểu <strong>41.5%</strong> chi phí đầu tư hạ tầng (tiết kiệm 98.2 km đường trục) mà vẫn bảo đảm
+                100% tính liên thông giữa toàn bộ 22 trạm bưu cục.
               </div>
             </div>
           </div>
@@ -963,7 +1089,8 @@ mst_edges = []
 
               <div class="sim-log-header">DSU EXECUTION LOG</div>
               <div class="kruskal-log-box" id="hanoiKruskalLog">
-                <div class="log-item info">> Sẵn sàng chạy Kruskal. Bấm "Bước tiếp" hoặc "Tự động" để duyệt 30 cạnh.</div>
+                <div class="log-item info">> Sẵn sàng chạy Kruskal. Bấm "Bước tiếp" hoặc "Tự động" để duyệt 30 cạnh.
+                </div>
               </div>
             </div>
           </div>
@@ -971,12 +1098,103 @@ mst_edges = []
       </div>
     </section>
 
-    <!-- SLIDE 11: TRADE-OFFS & FUTURE WORK -->
+    <!-- SLIDE 11: ALGORITHM RUNTIME SPEED BENCHMARK CHART -->
     <section class="slide" id="slide-11">
       <div class="slide-header">
-        <div class="slide-category">10 / Phản biện & Mở rộng</div>
+        <div class="slide-category">10 / Thực nghiệm Benchmark</div>
+        <h2 class="slide-title">Biểu Đồ So Sánh Tốc Độ Chạy: Kruskal vs Prim vs Borůvka</h2>
+        <p class="slide-subtitle">Đo hiệu năng thực thi theo quy mô số đỉnh (<span class="math"><i>V</i></span>) và mật
+          độ cạnh (<span class="math"><i>E</i></span>) — hỗ trợ chạy đo Live trực tiếp trên trình duyệt.</p>
+      </div>
+
+      <!-- Toolbar: Density Mode Switcher & Live Run -->
+      <div class="bench-toolbar">
+        <div class="bench-scenario-tabs">
+          <button class="bench-tab-btn active" id="benchModeSparse">✦ Đồ Thị Thưa (E ≈ 2.5·V)</button>
+          <button class="bench-tab-btn" id="benchModeDense">Đồ Thị Dày (E ≈ 0.25·V²)</button>
+        </div>
+        <div class="bench-run-actions">
+          <span class="bench-status-pill" id="benchStatusBadge">✓ Dữ liệu Benchmark chuẩn sẵn sàng</span>
+          <button class="bench-live-btn" id="benchLiveRunBtn"
+            title="Thực thi cả 3 thuật toán trên đồ thị ngẫu nhiên ngay bây giờ">⚡ Chạy Đo Thực Tế (Live)</button>
+        </div>
+      </div>
+
+      <!-- Benchmark Main Grid: SVG Chart + Summary Sidebar -->
+      <div class="bench-main-grid">
+        <div class="bench-chart-card">
+          <div class="bench-chart-header">
+            <div class="bench-chart-title" id="benchChartTitle">Đồ Thị Thưa (E ≈ 2.5·V): Thời gian thực thi (ms)</div>
+            <div class="bench-legend">
+              <span class="bench-legend-item"><span class="bench-swatch kruskal"></span> Kruskal (DSU)</span>
+              <span class="bench-legend-item"><span class="bench-swatch prim"></span> Prim (Min-Heap)</span>
+              <span class="bench-legend-item"><span class="bench-swatch boruvka"></span> Borůvka</span>
+            </div>
+          </div>
+
+          <div class="bench-svg-wrap" id="benchSvgWrap">
+            <svg class="bench-svg" id="benchChartSvg" viewBox="0 0 680 310" preserveAspectRatio="xMidYMid meet"></svg>
+            <div class="bench-tooltip" id="benchTooltip"></div>
+          </div>
+        </div>
+
+        <div class="bench-sidebar">
+          <div class="bench-kpi-card">
+            <div class="card-num" id="benchPeakTitle">MỐC LỚN NHẤT (V = 2500, E = 6,250)</div>
+
+            <div class="bench-bar-row">
+              <div class="bench-bar-meta">
+                <span><strong>Kruskal</strong> (Sort + DSU)</span>
+                <strong id="benchValKruskal" style="color: #10b981;">8.10 ms</strong>
+              </div>
+              <div class="bench-bar-track">
+                <div class="bench-bar-fill kruskal" id="benchBarKruskal" style="width: 51%;"></div>
+              </div>
+            </div>
+
+            <div class="bench-bar-row">
+              <div class="bench-bar-meta">
+                <span><strong>Prim</strong> (Min-Heap)</span>
+                <strong id="benchValPrim" style="color: #3b82f6;">10.45 ms</strong>
+              </div>
+              <div class="bench-bar-track">
+                <div class="bench-bar-fill prim" id="benchBarPrim" style="width: 66%;"></div>
+              </div>
+            </div>
+
+            <div class="bench-bar-row">
+              <div class="bench-bar-meta">
+                <span><strong>Borůvka</strong> (Multi-round)</span>
+                <strong id="benchValBoruvka" style="color: #f59e0b;">15.80 ms</strong>
+              </div>
+              <div class="bench-bar-track">
+                <div class="bench-bar-fill boruvka" id="benchBarBoruvka" style="width: 100%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bench-kpi-card">
+            <div class="card-num">KẾT LUẬN TỪ BIỂU ĐỒ TỐC ĐỘ</div>
+            <div class="bench-insight-list">
+              <div>• <strong style="color: #10b981;">Mạng thưa (E ≈ 2.5V):</strong> <strong>Kruskal</strong> nhanh nhất
+                nhờ sắp xếp mảng phẳng tốt cho Cache CPU và DSU <span class="math"><i>O</i>(α(<i>V</i>))</span>.</div>
+              <div>• <strong style="color: #3b82f6;">Mạng dày (E ≈ 0.25V²):</strong> <strong>Prim</strong> vượt trội
+                (nhanh gấp 2–4× Kruskal) vì không phải sort hàng trăm nghìn cạnh.</div>
+              <div>• <strong style="color: #f59e0b;">Borůvka (Tuần tự vs Song song):</strong> Chậm hơn ~1.8× khi chạy 1
+                luồng, nhưng là tối ưu nhất khi song song hóa trên GPU/đa nhân.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 12: TRADE-OFFS & FUTURE WORK -->
+    <section class="slide" id="slide-12">
+      <div class="slide-header">
+        <div class="slide-category">11 / Phản biện & Mở rộng</div>
         <h2 class="slide-title">Đánh Đổi Thực Tế & Kiến Trúc Bền Vững</h2>
-        <p class="slide-subtitle">Tư duy phản biện kỹ thuật: Giới hạn của mô hình cây và giải pháp trong thực tế doanh nghiệp.</p>
+        <p class="slide-subtitle">Tư duy phản biện kỹ thuật: Giới hạn của mô hình cây và giải pháp trong thực tế doanh
+          nghiệp.</p>
       </div>
 
       <div class="grid-2">
@@ -987,13 +1205,15 @@ mst_edges = []
             <li class="minimal-list-item">
               <span class="list-num">01.</span>
               <div>
-                <strong>Điểm lỗi đơn lẻ (Single Point of Failure):</strong> Vì là cấu trúc cây, mọi cạnh đều là cầu (Bridge). Nếu một tuyến huyết mạch bị tắc nghẽn, mạng lưới sẽ bị đứt gãy làm đôi.
+                <strong>Điểm lỗi đơn lẻ (Single Point of Failure):</strong> Vì là cấu trúc cây, mọi cạnh đều là cầu
+                (Bridge). Nếu một tuyến huyết mạch bị tắc nghẽn, mạng lưới sẽ bị đứt gãy làm đôi.
               </div>
             </li>
             <li class="minimal-list-item">
               <span class="list-num">02.</span>
               <div>
-                <strong>Độ trễ trung chuyển (Hop Count):</strong> MST tối ưu chi phí toàn mạng, nhưng khoảng cách giữa 2 điểm cụ thể có thể phải đi vòng qua nhiều trạm trung gian.
+                <strong>Độ trễ trung chuyển (Hop Count):</strong> MST tối ưu chi phí toàn mạng, nhưng khoảng cách giữa 2
+                điểm cụ thể có thể phải đi vòng qua nhiều trạm trung gian.
               </div>
             </li>
           </ul>
@@ -1006,13 +1226,16 @@ mst_edges = []
             <li class="minimal-list-item">
               <span class="list-num">01.</span>
               <div>
-                <strong>Mạng 2-Cạnh Liên Thông (2-Edge Connected):</strong> Bổ sung thêm các tuyến vành đai (Ring Topology) tại các Mega Hub để phòng ngừa rủi ro đứt gãy.
+                <strong>Mạng 2-Cạnh Liên Thông (2-Edge Connected):</strong> Bổ sung thêm các tuyến vành đai (Ring
+                Topology) tại các Mega Hub để phòng ngừa rủi ro đứt gãy.
               </div>
             </li>
             <li class="minimal-list-item">
               <span class="list-num">02.</span>
               <div>
-                <strong>Kiến Trúc Hai Tầng (Two-tier Logistics):</strong> Sử dụng MST làm <em>Mạng lưới trục (Backbone Network)</em> giữa các kho, sau đó chạy bài toán TSP / Vehicle Routing Problem (VRP) cho các xe giao hàng chặng cuối.
+                <strong>Kiến Trúc Hai Tầng (Two-tier Logistics):</strong> Sử dụng MST làm <em>Mạng lưới trục (Backbone
+                  Network)</em> giữa các kho, sau đó chạy bài toán TSP / Vehicle Routing Problem (VRP) cho các xe giao
+                hàng chặng cuối.
               </div>
             </li>
           </ul>
@@ -1020,17 +1243,19 @@ mst_edges = []
       </div>
     </section>
 
-    <!-- SLIDE 12: CONCLUSION & MOCK DEFENSE Q&A -->
-    <section class="slide" id="slide-12">
+    <!-- SLIDE 13: CONCLUSION & MOCK DEFENSE Q&A -->
+    <section class="slide" id="slide-13">
       <div class="slide-header">
-        <div class="slide-category">11 / Tổng kết & Vấn đáp</div>
+        <div class="slide-category">12 / Tổng kết & Vấn đáp</div>
         <h2 class="slide-title">Tổng Kết Đề Tài & Bộ Câu Hỏi Phản Biện</h2>
         <p class="slide-subtitle">Sẵn sàng bảo vệ đề tài trước Giảng viên và Hội đồng phản biện môn học.</p>
       </div>
 
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-        <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-3);">4 CÂU HỎI PHẢN BIỆN TRỌNG TÂM</span>
-        <button class="minimal-btn" id="toggleAllQaBtn" style="padding: 2px 10px; font-size: 0.72rem;">[ Mở tất cả câu hỏi ]</button>
+        <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-3);">4 CÂU HỎI PHẢN BIỆN TRỌNG
+          TÂM</span>
+        <button class="minimal-btn" id="toggleAllQaBtn" style="padding: 2px 10px; font-size: 0.72rem;">[ Mở tất cả câu
+          hỏi ]</button>
       </div>
 
       <div class="qa-grid">
@@ -1040,7 +1265,9 @@ mst_edges = []
             <span class="qa-toggle">+</span>
           </div>
           <div class="qa-answer">
-            <strong>Đáp:</strong> MST giải quyết bài toán quy hoạch <em>hạ tầng cố định</em> (tổng chi phí kết nối toàn bộ hệ thống nhỏ nhất). Dijkstra chỉ tìm đường đi ngắn nhất giữa 2 điểm cụ thể. TSP là tìm chu trình cho 1 xe đi qua hết các điểm (NP-hard). MST là bước nền tảng để thiết kế mạng lưới trước khi định tuyến bưu phẩm.
+            <strong>Đáp:</strong> MST giải quyết bài toán quy hoạch <em>hạ tầng cố định</em> (tổng chi phí kết nối toàn
+            bộ hệ thống nhỏ nhất). Dijkstra chỉ tìm đường đi ngắn nhất giữa 2 điểm cụ thể. TSP là tìm chu trình cho 1 xe
+            đi qua hết các điểm (NP-hard). MST là bước nền tảng để thiết kế mạng lưới trước khi định tuyến bưu phẩm.
           </div>
         </div>
 
@@ -1050,7 +1277,9 @@ mst_edges = []
             <span class="qa-toggle">+</span>
           </div>
           <div class="qa-answer">
-            <strong>Đáp:</strong> <em>Hoàn toàn đúng!</em> Cả Kruskal, Prim và Borůvka đều đúng khi có trọng số âm vì tính chất lát cắt (Cut Property) chỉ so sánh thứ tự hơn kém giữa các trọng số, không phụ thuộc vào dấu. Ngược lại, Dijkstra sẽ bị sai trên cạnh âm do tính chất tích lũy khoảng cách.
+            <strong>Đáp:</strong> <em>Hoàn toàn đúng!</em> Cả Kruskal, Prim và Borůvka đều đúng khi có trọng số âm vì
+            tính chất lát cắt (Cut Property) chỉ so sánh thứ tự hơn kém giữa các trọng số, không phụ thuộc vào dấu.
+            Ngược lại, Dijkstra sẽ bị sai trên cạnh âm do tính chất tích lũy khoảng cách.
           </div>
         </div>
 
@@ -1060,7 +1289,9 @@ mst_edges = []
             <span class="qa-toggle">+</span>
           </div>
           <div class="qa-answer">
-            <strong>Đáp:</strong> Kruskal và Borůvka tự động trả về một <em>Rừng cây bao trùm nhỏ nhất (MST Forest)</em> gồm đúng <span class="math"><i>V</i> − <i>C</i></span> cạnh (với <span class="math"><i>C</i></span> là số thành phần liên thông). Với Prim, nhóm đã bọc thêm vòng lặp duyệt đỉnh để quét qua các thành phần còn lại.
+            <strong>Đáp:</strong> Kruskal và Borůvka tự động trả về một <em>Rừng cây bao trùm nhỏ nhất (MST Forest)</em>
+            gồm đúng <span class="math"><i>V</i> − <i>C</i></span> cạnh (với <span class="math"><i>C</i></span> là số
+            thành phần liên thông). Với Prim, nhóm đã bọc thêm vòng lặp duyệt đỉnh để quét qua các thành phần còn lại.
           </div>
         </div>
 
@@ -1070,12 +1301,16 @@ mst_edges = []
             <span class="qa-toggle">+</span>
           </div>
           <div class="qa-answer">
-            <strong>Đáp:</strong> <span class="math">α(<i>n</i>)</span> là hàm cực chậm. Với mọi số lượng đỉnh trong vũ trụ thực tế (<span class="math"><i>V</i> &lt; 10<sup>80</sup></span>), ta luôn có <span class="math">α(<i>V</i>) ≤ 4</span>. Nhờ kết hợp đồng thời Path Compression và Union by Rank, mỗi thao tác của DSU đạt thời gian xấp xỉ hằng số <span class="math"><i>O</i>(1)</span>.
+            <strong>Đáp:</strong> <span class="math">α(<i>n</i>)</span> là hàm cực chậm. Với mọi số lượng đỉnh trong vũ
+            trụ thực tế (<span class="math"><i>V</i> &lt; 10<sup>80</sup></span>), ta luôn có <span
+              class="math">α(<i>V</i>) ≤ 4</span>. Nhờ kết hợp đồng thời Path Compression và Union by Rank, mỗi thao tác
+            của DSU đạt thời gian xấp xỉ hằng số <span class="math"><i>O</i>(1)</span>.
           </div>
         </div>
       </div>
 
-      <div style="margin-top: 20px; text-align: center; color: var(--text-3); font-size: 0.85rem; font-family: var(--font-mono);">
+      <div
+        style="margin-top: 20px; text-align: center; color: var(--text-3); font-size: 0.85rem; font-family: var(--font-mono);">
         THANK YOU / Q&amp;A DEFENSE READY
       </div>
     </section>
@@ -1142,12 +1377,16 @@ mst_edges = []
           <span class="shortcut-key">F</span>
         </div>
         <div class="shortcut-row">
+          <span>Chuyển đổi giao diện Sáng / Tối (Light / Dark)</span>
+          <span class="shortcut-key">T</span>
+        </div>
+        <div class="shortcut-row">
           <span>Trợ giúp phím tắt</span>
           <span class="shortcut-key">?</span>
         </div>
         <div class="shortcut-row">
           <span>Tương tác Visualizer (Slide 09)</span>
-          <span class="shortcut-key">[ (Lùi) / ] (Tiến) / Space (Play)</span>
+          <span class="shortcut-key">[ (Lùi) / ] (Tiến) / Space (Play) / + - (Zoom)</span>
         </div>
         <div class="shortcut-row">
           <span>Tương tác Bản đồ Hà Nội (Slide 10)</span>
@@ -1160,4 +1399,5 @@ mst_edges = []
   <script src="visualizer.js"></script>
   <script src="script.js"></script>
 </body>
+
 </html>

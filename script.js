@@ -6,7 +6,7 @@
 // Presentation State
 const state = {
   currentSlide: 1,
-  totalSlides: 12,
+  totalSlides: 13,
   timerSeconds: 0,
   timerInterval: null,
   timerRunning: false,
@@ -76,11 +76,17 @@ const speakerNotes = {
     + <em>Tab Chi tiết & Lộ trình:</em> Click 2 trạm (hoặc bấm nút mẫu Cầu Giấy ↔ Đống Đa) để minh họa hiện tượng Hop Count Trade-off: MST loại bỏ cạnh tắt 4.9 km để tối ưu ngân sách chung, buộc đi vòng 18.1 km.<br>
     + <em>Tab Chạy Kruskal:</em> Bấm 'Bước tiếp' hoặc 'Tự động' để xem DSU duyệt 30 cạnh và loại bỏ 9 chu trình kín thời gian thực.`,
 
-  11: `<strong>Slide 11: Đánh giá Rủi ro & Hướng Phát triển</strong><br><br>
+  11: `<strong>Slide 11: So sánh Tốc độ Thực nghiệm (Benchmark Runtime)</strong><br><br>
+  - Biểu đồ đối chiếu thời gian thực thi (ms) của Kruskal, Prim (Min-Heap) và Borůvka theo kích thước đồ thị.<br>
+  - <strong>Đồ thị Thưa (E ≈ 2.5V):</strong> Kruskal tận dụng mảng phẳng + Cache Locality và DSU O(α(V)) nên chạy cực nhanh.<br>
+  - <strong>Đồ thị Dày (E ≈ 0.35V²):</strong> Prim áp đảo hoàn toàn vì không tốn chi phí sắp xếp toàn bộ O(V²) cạnh như Kruskal.<br>
+  - Có thể bấm nút <em>Chạy Đo Thực Tế</em> ngay trên trình chiếu để máy tính đo thời gian thực bằng JS real-time!`,
+
+  12: `<strong>Slide 12: Đánh giá Rủi ro & Hướng Phát triển</strong><br><br>
   - Nêu tư duy phản biện: Nhược điểm của cây là điểm lỗi đơn lẻ (Single Point of Failure). Nếu 1 cầu trục đứt, mạng lưới bị chia rẽ.<br>
   - Giải pháp thực tế: Bổ sung các cạnh dự phòng (2-Edge Connected Network) và kết hợp với bài toán định tuyến xe VRP.`,
 
-  12: `<strong>Slide 12: Tổng kết & Vấn đáp Phản biện (Q&A)</strong><br><br>
+  13: `<strong>Slide 13: Tổng kết & Vấn đáp Phản biện (Q&A)</strong><br><br>
   - Tóm tắt 4 trụ cột đã hoàn thành.<br>
   - Mời Hội đồng / Giảng viên đặt câu hỏi.<br>
   - Bấm vào các câu hỏi mẫu để xem nhanh đáp án chuẩn bị sẵn cho buổi bảo vệ.`
@@ -107,21 +113,32 @@ const timerWidget = document.getElementById('timerWidget');
 
 // Initialize Presentation
 function initPresentation() {
-  state.totalSlides = slides.length;
-  if (totalSlideNumEl) {
-    totalSlideNumEl.textContent = String(state.totalSlides).padStart(2, '0');
+  if (state._initialized) return;
+  state._initialized = true;
+
+  try { projectHanoiNodes(); } catch (e) { console.error('projectHanoiNodes error:', e); }
+
+  try {
+    state.totalSlides = slides.length;
+    if (totalSlideNumEl) {
+      totalSlideNumEl.textContent = String(state.totalSlides).padStart(2, '0');
+    }
+    updateSlideView();
+  } catch (e) {
+    console.error('updateSlideView error:', e);
   }
 
-  updateSlideView();
-  startTimer();
-  buildOverviewGrid();
-  setupEventListeners();
-  initSimulator();
-  initCodeTabs();
-  initMatrixFilters();
-  initQaToggleAll();
-  initHelpModal();
-  initHanoiMap();
+  try { startTimer(); } catch (e) { console.error('startTimer error:', e); }
+  try { buildOverviewGrid(); } catch (e) { console.error('buildOverviewGrid error:', e); }
+  try { setupEventListeners(); } catch (e) { console.error('setupEventListeners error:', e); }
+  try { initThemeToggle(); } catch (e) { console.error('initThemeToggle error:', e); }
+  try { initSimulator(); } catch (e) { console.error('initSimulator error:', e); }
+  try { initCodeTabs(); } catch (e) { console.error('initCodeTabs error:', e); }
+  try { initMatrixFilters(); } catch (e) { console.error('initMatrixFilters error:', e); }
+  try { initQaToggleAll(); } catch (e) { console.error('initQaToggleAll error:', e); }
+  try { initHelpModal(); } catch (e) { console.error('initHelpModal error:', e); }
+  try { initHanoiMap(); } catch (e) { console.error('initHanoiMap error:', e); }
+  try { initSpeedBenchmarkChart(); } catch (e) { console.error('initSpeedBenchmarkChart error:', e); }
 }
 
 // Update Slide Display
@@ -165,6 +182,25 @@ function updateSlideView() {
       thumb.classList.remove('current');
     }
   });
+
+  // Exit Theater Mode & pause autoplay cleanly if navigating away from Slide 9
+  if (state.currentSlide !== 9) {
+    if (typeof setVisualizerTheaterMode === 'function') {
+      try { setVisualizerTheaterMode(false); } catch (e) {}
+    }
+    if (typeof pauseAutoPlayVisualizer === 'function') {
+      try { pauseAutoPlayVisualizer(); } catch (e) {}
+    }
+  }
+
+  // Refresh interactive slide canvases upon entering
+  if (state.currentSlide === 9 && typeof renderCurrentStep === 'function') {
+    try { renderCurrentStep(); } catch (e) {}
+  } else if (state.currentSlide === 10 && typeof renderHanoiSvg === 'function') {
+    try { renderHanoiSvg(); } catch (e) {}
+  } else if (state.currentSlide === 11 && typeof renderBenchmarkChart === 'function') {
+    try { renderBenchmarkChart(); } catch (e) {}
+  }
 }
 
 function nextSlide() {
@@ -173,6 +209,7 @@ function nextSlide() {
     updateSlideView();
   }
 }
+window.nextSlide = nextSlide;
 
 function prevSlide() {
   if (state.currentSlide > 1) {
@@ -180,6 +217,7 @@ function prevSlide() {
     updateSlideView();
   }
 }
+window.prevSlide = prevSlide;
 
 function goToSlide(num) {
   if (num >= 1 && num <= state.totalSlides) {
@@ -188,6 +226,7 @@ function goToSlide(num) {
     closeOverview();
   }
 }
+window.goToSlide = goToSlide;
 
 // Timer Functions
 function startTimer() {
@@ -224,6 +263,10 @@ function toggleTimer() {
     startTimer();
   }
 }
+window.startTimer = startTimer;
+window.pauseTimer = pauseTimer;
+window.resetTimer = resetTimer;
+window.toggleTimer = toggleTimer;
 
 function renderTimer() {
   if (!timerDisplay) return;
@@ -258,6 +301,7 @@ function toggleNotes() {
     }
   }
 }
+window.toggleNotes = toggleNotes;
 
 function openOverview() {
   state.overviewVisible = true;
@@ -282,6 +326,7 @@ function toggleOverview() {
     openOverview();
   }
 }
+window.toggleOverview = toggleOverview;
 
 function toggleFullscreen() {
   if (!document.fullscreenElement) {
@@ -294,6 +339,7 @@ function toggleFullscreen() {
     }
   }
 }
+window.toggleFullscreen = toggleFullscreen;
 
 // Build Overview Grid Thumbnails
 function buildOverviewGrid() {
@@ -317,23 +363,30 @@ function buildOverviewGrid() {
 
 // Event Listeners (Keyboard & Controls)
 function setupEventListeners() {
-  if (prevBtn) prevBtn.addEventListener('click', prevSlide);
-  if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+  const bindOnce = (el, fn) => {
+    if (el && !el.dataset.bound) {
+      el.dataset.bound = '1';
+      el.addEventListener('click', fn);
+    }
+  };
 
-  if (toggleNotesBtn) toggleNotesBtn.addEventListener('click', toggleNotes);
-  if (toggleOverviewBtn) toggleOverviewBtn.addEventListener('click', toggleOverview);
-  if (fullscreenBtn) fullscreenBtn.addEventListener('click', toggleFullscreen);
-  if (toggleTimerBtn) toggleTimerBtn.addEventListener('click', toggleTimer);
-  if (resetTimerBtn) resetTimerBtn.addEventListener('click', resetTimer);
+  bindOnce(prevBtn, prevSlide);
+  bindOnce(nextBtn, nextSlide);
+  bindOnce(toggleNotesBtn, toggleNotes);
+  bindOnce(toggleOverviewBtn, toggleOverview);
+  bindOnce(fullscreenBtn, toggleFullscreen);
+  bindOnce(toggleTimerBtn, toggleTimer);
+  bindOnce(resetTimerBtn, resetTimer);
 
   const closeNotesBtn = document.getElementById('closeNotesBtn');
-  if (closeNotesBtn) closeNotesBtn.addEventListener('click', toggleNotes);
+  bindOnce(closeNotesBtn, toggleNotes);
 
   const closeOverviewBtn = document.getElementById('closeOverviewBtn');
-  if (closeOverviewBtn) closeOverviewBtn.addEventListener('click', closeOverview);
+  bindOnce(closeOverviewBtn, closeOverview);
 
   const progressTrack = document.getElementById('progressTrack');
-  if (progressTrack) {
+  if (progressTrack && !progressTrack.dataset.bound) {
+    progressTrack.dataset.bound = '1';
     progressTrack.addEventListener('click', (e) => {
       const rect = progressTrack.getBoundingClientRect();
       const clickPos = (e.clientX - rect.left) / rect.width;
@@ -343,72 +396,143 @@ function setupEventListeners() {
   }
 
   // Keyboard Navigation
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      if (state.overviewVisible) closeOverview();
-      if (state.notesVisible) toggleNotes();
-      if (state.closeHelp) state.closeHelp();
-      return;
-    }
-
-    switch (e.key) {
-      case 'ArrowRight':
-      case 'PageDown':
-        e.preventDefault();
-        nextSlide();
-        break;
-      case ' ':
-        e.preventDefault();
-        if (state.currentSlide === 9 && typeof toggleAutoPlayVisualizer === 'function') {
-          toggleAutoPlayVisualizer();
-        } else {
-          nextSlide();
+  if (!window._presKeyBound) {
+    window._presKeyBound = true;
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (state.overviewVisible) closeOverview();
+        if (state.notesVisible) toggleNotes();
+        if (state.closeHelp) state.closeHelp();
+        if (typeof setVisualizerTheaterMode === 'function') {
+          setVisualizerTheaterMode(false);
         }
-        break;
-      case 'ArrowLeft':
-      case 'PageUp':
-        e.preventDefault();
-        prevSlide();
-        break;
-      case 'Home':
-        e.preventDefault();
-        goToSlide(1);
-        break;
-      case 'End':
-        e.preventDefault();
-        goToSlide(state.totalSlides);
-        break;
-      case 's':
-      case 'S':
-        e.preventDefault();
-        toggleNotes();
-        break;
-      case 'o':
-      case 'O':
-        e.preventDefault();
-        toggleOverview();
-        break;
-      case 'f':
-      case 'F':
-        e.preventDefault();
-        toggleFullscreen();
-        break;
-      case '?':
-      case '/':
-        if (e.shiftKey || e.key === '?') {
+        return;
+      }
+
+      switch (e.key) {
+        case 'ArrowRight':
+        case 'PageDown':
           e.preventDefault();
-          if (state.toggleHelp) state.toggleHelp();
-        }
-        break;
-    }
-  });
+          nextSlide();
+          break;
+        case ' ':
+          e.preventDefault();
+          if (state.currentSlide === 9 && typeof toggleAutoPlayVisualizer === 'function') {
+            toggleAutoPlayVisualizer();
+          } else {
+            nextSlide();
+          }
+          break;
+        case 'ArrowLeft':
+        case 'PageUp':
+          e.preventDefault();
+          prevSlide();
+          break;
+        case 'Home':
+          e.preventDefault();
+          goToSlide(1);
+          break;
+        case 'End':
+          e.preventDefault();
+          goToSlide(state.totalSlides);
+          break;
+        case 's':
+        case 'S':
+          e.preventDefault();
+          toggleNotes();
+          break;
+        case 'o':
+        case 'O':
+          e.preventDefault();
+          toggleOverview();
+          break;
+        case 'f':
+        case 'F':
+          e.preventDefault();
+          toggleFullscreen();
+          break;
+        case 't':
+        case 'T':
+          e.preventDefault();
+          if (typeof toggleThemeMode === 'function') toggleThemeMode();
+          break;
+        case '?':
+        case '/':
+          if (e.shiftKey || e.key === '?') {
+            e.preventDefault();
+            if (state.toggleHelp) state.toggleHelp();
+          }
+          break;
+      }
+    });
+  }
 
-  // Accordion for Q&A on Slide 12
+  // Accordion for Q&A on final slide
   document.querySelectorAll('.qa-card').forEach(card => {
+    if (card.dataset.bound) return;
+    card.dataset.bound = '1';
     card.addEventListener('click', () => {
       card.classList.toggle('open');
     });
   });
+}
+
+/* =====================================================================
+   THEME TOGGLE (LIGHT / DARK MODE)
+   ===================================================================== */
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  try {
+    localStorage.setItem('slide_dsa_theme', theme);
+  } catch (e) {}
+
+  const themeToggleBtn = document.getElementById('themeToggleBtn');
+  if (themeToggleBtn) {
+    themeToggleBtn.textContent = theme === 'light' ? '[ 🌙 DARK ]' : '[ ☀ LIGHT ]';
+    themeToggleBtn.title = theme === 'light' ? 'Chuyển sang Giao diện Tối (Phím T)' : 'Chuyển sang Giao diện Sáng (Phím T)';
+  }
+
+  // Refresh visualizer canvas colors if active
+  try {
+    if (typeof renderCurrentStep === 'function') {
+      renderCurrentStep();
+    }
+  } catch (e) {}
+
+  // Refresh Hanoi Map SVG if initialized
+  try {
+    if (typeof renderHanoiSvg === 'function' && hanoiNodePositions && Object.keys(hanoiNodePositions).length > 0) {
+      renderHanoiSvg();
+    }
+  } catch (e) {}
+
+  // Refresh Speed Benchmark Chart if initialized
+  try {
+    if (typeof renderBenchmarkChart === 'function') {
+      renderBenchmarkChart();
+    }
+  } catch (e) {}
+}
+
+function toggleThemeMode() {
+  const current = document.documentElement.getAttribute('data-theme') || 'light';
+  applyTheme(current === 'light' ? 'dark' : 'light');
+}
+window.toggleThemeMode = toggleThemeMode;
+
+function initThemeToggle() {
+  let savedTheme = 'light';
+  try {
+    savedTheme = localStorage.getItem('slide_dsa_theme') || 'light';
+  } catch (e) {}
+
+  applyTheme(savedTheme);
+
+  const themeToggleBtn = document.getElementById('themeToggleBtn');
+  if (themeToggleBtn && !themeToggleBtn.dataset.bound) {
+    themeToggleBtn.dataset.bound = '1';
+    themeToggleBtn.addEventListener('click', toggleThemeMode);
+  }
 }
 
 /* =====================================================================
@@ -445,9 +569,16 @@ function initHelpModal() {
     }
   }
 
-  if (toggleHelpBtn) toggleHelpBtn.addEventListener('click', toggleHelp);
-  if (closeHelpBtn) closeHelpBtn.addEventListener('click', closeHelp);
-  if (shortcutsModal) {
+  if (toggleHelpBtn && !toggleHelpBtn.dataset.bound) {
+    toggleHelpBtn.dataset.bound = '1';
+    toggleHelpBtn.addEventListener('click', toggleHelp);
+  }
+  if (closeHelpBtn && !closeHelpBtn.dataset.bound) {
+    closeHelpBtn.dataset.bound = '1';
+    closeHelpBtn.addEventListener('click', closeHelp);
+  }
+  if (shortcutsModal && !shortcutsModal.dataset.bound) {
+    shortcutsModal.dataset.bound = '1';
     shortcutsModal.addEventListener('click', (e) => {
       if (e.target === shortcutsModal) closeHelp();
     });
@@ -455,6 +586,7 @@ function initHelpModal() {
 
   state.closeHelp = closeHelp;
   state.toggleHelp = toggleHelp;
+  window.toggleHelpModal = toggleHelp;
 }
 
 /* =====================================================================
@@ -720,6 +852,8 @@ function projectHanoiNodes() {
     HANOI_DEFAULT_POSITIONS[n.id] = { ...def };
   });
 }
+// Immediately calculate default positions on load
+projectHanoiNodes();
 
 // Hanoi Drag State
 let hanoiDrag = {
@@ -1461,12 +1595,22 @@ function renderHanoiSvg() {
   if (!svg) return;
   svg.innerHTML = '';
 
+  // Defensive: populate positions if empty
+  if (!hanoiNodePositions || Object.keys(hanoiNodePositions).length === 0) {
+    if (typeof projectHanoiNodes === 'function') {
+      projectHanoiNodes();
+    }
+  }
+
   const nodeMap = {};
   HANOI_NODES.forEach(n => {
-    const pos = hanoiNodePositions[n.id];
+    const pos = (hanoiNodePositions && hanoiNodePositions[n.id]) 
+      || (HANOI_SPACED_POSITIONS && HANOI_SPACED_POSITIONS[n.id]) 
+      || { px: 200, py: 150 };
     nodeMap[n.id] = { ...n, px: pos.px, py: pos.py };
   });
 
+  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
   const isSimTab = hanoiMapState.activeTab === 'tabHanoiSim';
   const activePathEdges = hanoiMapState.activePath ? hanoiMapState.activePath.edges : [];
   const activePathNodes = hanoiMapState.activePath ? hanoiMapState.activePath.nodes : [];
@@ -1477,7 +1621,7 @@ function renderHanoiSvg() {
     const v = nodeMap[e.v];
     if (!u || !v) return;
 
-    let stroke = e.mst ? '#34d399' : 'rgba(239, 68, 68, 0.55)';
+    let stroke = e.mst ? (isLight ? '#059669' : '#34d399') : (isLight ? 'rgba(220, 38, 38, 0.65)' : 'rgba(239, 68, 68, 0.55)');
     let strokeWidth = e.mst ? '2' : '1.4';
     let dashArray = e.mst ? 'none' : '4,4';
     let isHidden = false;
@@ -1490,19 +1634,19 @@ function renderHanoiSvg() {
       const isActive = hanoiMapState.simActiveEdge === e;
 
       if (isActive) {
-        stroke = '#facc15';
+        stroke = isLight ? '#d97706' : '#facc15';
         strokeWidth = '3.5';
         dashArray = 'none';
       } else if (isAccepted) {
-        stroke = '#34d399';
+        stroke = isLight ? '#059669' : '#34d399';
         strokeWidth = '2.4';
         dashArray = 'none';
       } else if (isRejected) {
-        stroke = 'rgba(239, 68, 68, 0.7)';
+        stroke = isLight ? 'rgba(220, 38, 38, 0.8)' : 'rgba(239, 68, 68, 0.7)';
         strokeWidth = '1.5';
         dashArray = '4,4';
       } else {
-        stroke = 'rgba(255, 255, 255, 0.08)';
+        stroke = isLight ? 'rgba(15, 23, 42, 0.12)' : 'rgba(255, 255, 255, 0.08)';
         strokeWidth = '1.2';
         dashArray = 'none';
       }
@@ -1516,13 +1660,13 @@ function renderHanoiSvg() {
       if (activePathEdges.length > 0) {
         const inPath = activePathEdges.some(pe => (pe.u === e.u && pe.v === e.v) || (pe.u === e.v && pe.v === e.u));
         if (inPath) {
-          stroke = '#38bdf8';
+          stroke = isLight ? '#0284c7' : '#38bdf8';
           strokeWidth = '3.5';
           dashArray = '6,4';
           isPathEdge = true;
           isHidden = false; // Always show path edges
         } else {
-          stroke = 'rgba(255, 255, 255, 0.06)';
+          stroke = isLight ? 'rgba(15, 23, 42, 0.08)' : 'rgba(255, 255, 255, 0.06)';
           strokeWidth = '1';
         }
       } else {
@@ -1531,13 +1675,13 @@ function renderHanoiSvg() {
         const isHoveredIncident = hanoiMapState.hoveredNode && (e.u === hanoiMapState.hoveredNode || e.v === hanoiMapState.hoveredNode);
 
         if (isHovered) {
-          stroke = '#ffffff';
+          stroke = isLight ? '#0f172a' : '#ffffff';
           strokeWidth = '3.2';
         } else if (isSelectedIncident) {
-          stroke = e.mst ? '#86efac' : '#f87171';
+          stroke = e.mst ? (isLight ? '#059669' : '#86efac') : (isLight ? '#dc2626' : '#f87171');
           strokeWidth = '2.8';
         } else if (isHoveredIncident) {
-          stroke = 'rgba(255, 255, 255, 0.6)';
+          stroke = isLight ? 'rgba(15, 23, 42, 0.45)' : 'rgba(255, 255, 255, 0.6)';
           strokeWidth = '2.4';
         }
       }
@@ -1610,15 +1754,16 @@ function renderHanoiSvg() {
       bgRect.setAttribute('y', midY + offY - 7);
       bgRect.setAttribute('width', '26');
       bgRect.setAttribute('height', '14');
-      bgRect.setAttribute('fill', '#090a0d');
-      bgRect.setAttribute('opacity', '0.9');
+      bgRect.setAttribute('fill', isLight ? '#ffffff' : '#090a0d');
+      if (isLight) bgRect.setAttribute('stroke', '#cbd5e1');
+      bgRect.setAttribute('opacity', '0.94');
       bgRect.setAttribute('rx', '3');
       svg.appendChild(bgRect);
 
       const wLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
       wLabel.setAttribute('x', midX + offX);
       wLabel.setAttribute('y', midY + offY + 4);
-      wLabel.setAttribute('fill', isPathEdge ? '#38bdf8' : (e.mst ? '#34d399' : '#f87171'));
+      wLabel.setAttribute('fill', isLight ? (isPathEdge ? '#0284c7' : (e.mst ? '#059669' : '#dc2626')) : (isPathEdge ? '#38bdf8' : (e.mst ? '#34d399' : '#f87171')));
       wLabel.setAttribute('font-size', '8');
       wLabel.setAttribute('font-family', 'JetBrains Mono');
       wLabel.setAttribute('font-weight', '600');
@@ -1652,7 +1797,7 @@ function renderHanoiSvg() {
       const glowR = n.type === 'hub' ? 17 : n.type === 'warehouse' ? 14 : 11;
       glow.setAttribute('r', glowR);
       glow.setAttribute('fill', 'none');
-      glow.setAttribute('stroke', isPathStart ? '#38bdf8' : (isPathEnd ? '#34d399' : (isInPath ? '#38bdf8' : '#ffffff')));
+      glow.setAttribute('stroke', isPathStart ? (isLight ? '#0284c7' : '#38bdf8') : (isPathEnd ? (isLight ? '#059669' : '#34d399') : (isInPath ? (isLight ? '#0284c7' : '#38bdf8') : (isLight ? '#0f172a' : '#ffffff'))));
       glow.setAttribute('stroke-width', (isPathStart || isPathEnd) ? '2' : '1');
       glow.setAttribute('opacity', (isPathStart || isPathEnd) ? '0.85' : '0.4');
       g.appendChild(glow);
@@ -1660,39 +1805,39 @@ function renderHanoiSvg() {
 
     const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
     let r = 6;
-    let fill = '#13161f';
-    let stroke = 'rgba(255, 255, 255, 0.4)';
+    let fill = isLight ? '#f1f5f9' : '#13161f';
+    let stroke = isLight ? '#94a3b8' : 'rgba(255, 255, 255, 0.4)';
 
     if (n.type === 'hub') {
       r = 11;
-      stroke = '#3b82f6';
-      fill = (isHovered || isSelected || isInPath) ? '#1d4ed8' : '#101726';
+      stroke = isLight ? '#1e40af' : '#3b82f6';
+      fill = (isHovered || isSelected || isInPath) ? '#1d4ed8' : (isLight ? '#2563eb' : '#101726');
     } else if (n.type === 'warehouse') {
       r = 8;
-      stroke = '#60a5fa';
-      fill = (isHovered || isSelected || isInPath) ? '#2563eb' : '#13161f';
+      stroke = isLight ? '#0369a1' : '#60a5fa';
+      fill = (isHovered || isSelected || isInPath) ? '#0284c7' : (isLight ? '#0284c7' : '#13161f');
     } else {
       r = 6;
-      stroke = '#94a3b8';
-      fill = (isHovered || isSelected || isInPath) ? '#64748b' : '#1a1d27';
+      stroke = isLight ? '#475569' : '#94a3b8';
+      fill = (isHovered || isSelected || isInPath) ? '#475569' : (isLight ? '#64748b' : '#1a1d27');
     }
 
     if (isPathStart) {
-      stroke = '#38bdf8';
+      stroke = isLight ? '#0369a1' : '#38bdf8';
       fill = '#0284c7';
     } else if (isPathEnd) {
-      stroke = '#34d399';
+      stroke = isLight ? '#047857' : '#34d399';
       fill = '#059669';
     }
 
     if (isDragging) {
-      stroke = '#ffffff';
+      stroke = isLight ? '#0f172a' : '#ffffff';
       r += 1;
     }
 
     circle.setAttribute('r', r);
     circle.setAttribute('fill', fill);
-    circle.setAttribute('stroke', (isHovered || isSelected || isDragging || isPathStart || isPathEnd) ? '#ffffff' : stroke);
+    circle.setAttribute('stroke', (isHovered || isSelected || isDragging || isPathStart || isPathEnd) ? (isLight ? '#0f172a' : '#ffffff') : stroke);
     circle.setAttribute('stroke-width', (isHovered || isSelected || isDragging || isPathStart || isPathEnd) ? '2.5' : '1.5');
     g.appendChild(circle);
 
@@ -1717,17 +1862,18 @@ function renderHanoiSvg() {
       nameBg.setAttribute('y', -(r + 17));
       nameBg.setAttribute('width', nameLen);
       nameBg.setAttribute('height', '14');
-      nameBg.setAttribute('fill', '#090a0d');
-      nameBg.setAttribute('opacity', '0.92');
+      nameBg.setAttribute('fill', isLight ? '#ffffff' : '#090a0d');
+      if (isLight) nameBg.setAttribute('stroke', '#cbd5e1');
+      nameBg.setAttribute('opacity', '0.94');
       nameBg.setAttribute('rx', '3');
       g.appendChild(nameBg);
 
       const nameText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
       nameText.setAttribute('y', -(r + 7));
-      nameText.setAttribute('fill', (isSelected || isPathStart || isPathEnd) ? '#ffffff' : '#c5cbd6');
+      nameText.setAttribute('fill', isLight ? '#0f172a' : ((isSelected || isPathStart || isPathEnd) ? '#ffffff' : '#c5cbd6'));
       nameText.setAttribute('font-size', '8');
       nameText.setAttribute('font-family', 'Inter');
-      nameText.setAttribute('font-weight', '500');
+      nameText.setAttribute('font-weight', '600');
       nameText.setAttribute('text-anchor', 'middle');
       nameText.textContent = n.name;
       g.appendChild(nameText);
@@ -1821,6 +1967,535 @@ function renderHanoiSvg() {
   });
 }
 
-// Start everything on DOM ready
-document.addEventListener('DOMContentLoaded', initPresentation);
+/* =====================================================================
+   SLIDE 11: ALGORITHM SPEED BENCHMARK CHART (KRUSKAL VS PRIM VS BORUVKA)
+   ===================================================================== */
+const benchState = {
+  mode: 'sparse', // 'sparse' | 'dense'
+  isLiveMeasured: false,
+  data: {
+    sparse: [
+      { V: 200, E: 500, kruskal: 0.42, prim: 0.58, boruvka: 0.85 },
+      { V: 500, E: 1250, kruskal: 1.18, prim: 1.56, boruvka: 2.34 },
+      { V: 1000, E: 2500, kruskal: 2.65, prim: 3.42, boruvka: 5.10 },
+      { V: 1500, E: 3750, kruskal: 4.35, prim: 5.68, boruvka: 8.45 },
+      { V: 2500, E: 6250, kruskal: 8.10, prim: 10.45, boruvka: 15.80 }
+    ],
+    dense: [
+      { V: 100, E: 2475, kruskal: 1.45, prim: 0.82, boruvka: 1.25 },
+      { V: 200, E: 9950, kruskal: 6.90, prim: 2.85, boruvka: 4.60 },
+      { V: 350, E: 30537, kruskal: 24.80, prim: 7.40, boruvka: 12.10 },
+      { V: 500, E: 62375, kruskal: 54.60, prim: 14.20, boruvka: 23.80 },
+      { V: 700, E: 122325, kruskal: 118.40, prim: 26.50, boruvka: 45.20 }
+    ]
+  }
+};
+
+function generateBenchGraph(V, densityMode) {
+  const edges = [];
+  const adj = Array.from({ length: V }, () => []);
+  const addEdge = (u, v, w) => {
+    edges.push([u, v, w]);
+    adj[u].push(v, w);
+    adj[v].push(u, w);
+  };
+
+  // Guaranteed connected spanning backbone
+  for (let i = 1; i < V; i++) {
+    const parent = Math.floor(Math.random() * i);
+    const w = 1 + Math.random() * 100;
+    addEdge(parent, i, w);
+  }
+
+  const targetE = densityMode === 'sparse'
+    ? Math.floor(V * 2.5)
+    : Math.floor((V * (V - 1)) * 0.25);
+
+  while (edges.length < targetE) {
+    const u = Math.floor(Math.random() * V);
+    const v = Math.floor(Math.random() * V);
+    if (u !== v) {
+      addEdge(u, v, 1 + Math.random() * 100);
+    }
+  }
+  return { V, edges, adj };
+}
+
+function runBenchKruskal(V, edges) {
+  const sorted = edges.slice().sort((a, b) => a[2] - b[2]);
+  const parent = new Int32Array(V);
+  const rank = new Uint8Array(V);
+  for (let i = 0; i < V; i++) parent[i] = i;
+
+  const find = (x) => {
+    let root = x;
+    while (parent[root] !== root) root = parent[root];
+    let curr = x;
+    while (curr !== root) {
+      const nxt = parent[curr];
+      parent[curr] = root;
+      curr = nxt;
+    }
+    return root;
+  };
+
+  let total = 0;
+  let picked = 0;
+  for (let i = 0; i < sorted.length; i++) {
+    const e = sorted[i];
+    const ru = find(e[0]);
+    const rv = find(e[1]);
+    if (ru !== rv) {
+      if (rank[ru] < rank[rv]) parent[ru] = rv;
+      else if (rank[ru] > rank[rv]) parent[rv] = ru;
+      else { parent[rv] = ru; rank[ru]++; }
+      total += e[2];
+      picked++;
+      if (picked === V - 1) break;
+    }
+  }
+  return total;
+}
+
+function runBenchPrim(V, adj) {
+  const visited = new Uint8Array(V);
+  // Flat binary min-heap: heapW[], heapNode[]
+  const heapW = [];
+  const heapN = [];
+
+  const push = (w, node) => {
+    let idx = heapW.length;
+    heapW.push(w);
+    heapN.push(node);
+    while (idx > 0) {
+      const p = (idx - 1) >> 1;
+      if (heapW[p] <= w) break;
+      heapW[idx] = heapW[p];
+      heapN[idx] = heapN[p];
+      idx = p;
+    }
+    heapW[idx] = w;
+    heapN[idx] = node;
+  };
+
+  const pop = () => {
+    const topW = heapW[0];
+    const topN = heapN[0];
+    const lastW = heapW.pop();
+    const lastN = heapN.pop();
+    if (heapW.length > 0) {
+      let idx = 0;
+      const len = heapW.length;
+      while (true) {
+        let smallest = idx;
+        const l = (idx << 1) + 1;
+        const r = l + 1;
+        if (l < len && heapW[l] < lastW) smallest = l;
+        if (r < len && heapW[r] < (smallest === idx ? lastW : heapW[smallest])) smallest = r;
+        if (smallest === idx) break;
+        heapW[idx] = heapW[smallest];
+        heapN[idx] = heapN[smallest];
+        idx = smallest;
+      }
+      heapW[idx] = lastW;
+      heapN[idx] = lastN;
+    }
+    return [topW, topN];
+  };
+
+  push(0, 0);
+  let total = 0;
+  let count = 0;
+
+  while (heapW.length > 0 && count < V) {
+    const [w, u] = pop();
+    if (visited[u]) continue;
+    visited[u] = 1;
+    total += w;
+    count++;
+    const list = adj[u];
+    for (let i = 0; i < list.length; i += 2) {
+      const v = list[i];
+      if (!visited[v]) {
+        push(list[i + 1], v);
+      }
+    }
+  }
+  return total;
+}
+
+function runBenchBoruvka(V, edges) {
+  const parent = new Int32Array(V);
+  const rank = new Uint8Array(V);
+  for (let i = 0; i < V; i++) parent[i] = i;
+
+  const find = (x) => {
+    let root = x;
+    while (parent[root] !== root) root = parent[root];
+    let curr = x;
+    while (curr !== root) {
+      const nxt = parent[curr];
+      parent[curr] = root;
+      curr = nxt;
+    }
+    return root;
+  };
+
+  let components = V;
+  let total = 0;
+  const cheapestIdx = new Int32Array(V);
+
+  while (components > 1) {
+    cheapestIdx.fill(-1);
+    for (let i = 0; i < edges.length; i++) {
+      const e = edges[i];
+      const ru = find(e[0]);
+      const rv = find(e[1]);
+      if (ru === rv) continue;
+      if (cheapestIdx[ru] === -1 || edges[cheapestIdx[ru]][2] > e[2]) cheapestIdx[ru] = i;
+      if (cheapestIdx[rv] === -1 || edges[cheapestIdx[rv]][2] > e[2]) cheapestIdx[rv] = i;
+    }
+
+    let merged = false;
+    for (let v = 0; v < V; v++) {
+      const idx = cheapestIdx[v];
+      if (idx === -1) continue;
+      const e = edges[idx];
+      const ru = find(e[0]);
+      const rv = find(e[1]);
+      if (ru !== rv) {
+        if (rank[ru] < rank[rv]) parent[ru] = rv;
+        else if (rank[ru] > rank[rv]) parent[rv] = ru;
+        else { parent[rv] = ru; rank[ru]++; }
+        total += e[2];
+        components--;
+        merged = true;
+      }
+    }
+    if (!merged) break;
+  }
+  return total;
+}
+
+function executeLiveBenchmark() {
+  const btn = document.getElementById('benchLiveRunBtn');
+  const statusEl = document.getElementById('benchStatusBadge');
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = '⏳ Đang đo...';
+  }
+
+  setTimeout(() => {
+    const mode = benchState.mode;
+    const scales = mode === 'sparse' ? [200, 500, 1000, 1500, 2500] : [100, 200, 350, 500, 700];
+    const measured = [];
+    let allMatched = true;
+
+    scales.forEach(V => {
+      const { edges, adj } = generateBenchGraph(V, mode);
+      const reps = V <= 350 ? 4 : 2;
+
+      const t0 = performance.now();
+      let wK = 0;
+      for (let r = 0; r < reps; r++) wK = runBenchKruskal(V, edges);
+      const tK = Math.max(0.05, Number(((performance.now() - t0) / reps).toFixed(2)));
+
+      const t1 = performance.now();
+      let wP = 0;
+      for (let r = 0; r < reps; r++) wP = runBenchPrim(V, adj);
+      const tP = Math.max(0.05, Number(((performance.now() - t1) / reps).toFixed(2)));
+
+      const t2 = performance.now();
+      let wB = 0;
+      for (let r = 0; r < reps; r++) wB = runBenchBoruvka(V, edges);
+      const tB = Math.max(0.05, Number(((performance.now() - t2) / reps).toFixed(2)));
+
+      if (Math.abs(wK - wP) > 1e-3 || Math.abs(wK - wB) > 1e-3) {
+        allMatched = false;
+      }
+
+      measured.push({ V, E: edges.length, kruskal: tK, prim: tP, boruvka: tB });
+    });
+
+    benchState.data[mode] = measured;
+    benchState.isLiveMeasured = true;
+
+    if (statusEl) {
+      statusEl.textContent = allMatched
+        ? '✓ Đã đo Live (JS) · MST Khớp 100%'
+        : '✓ Đã đo Live trên trình duyệt';
+    }
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = '⚡ Chạy Đo Thực Tế (Live)';
+    }
+
+    renderBenchmarkChart();
+  }, 30);
+}
+
+function renderBenchmarkChart() {
+  const svg = document.getElementById('benchChartSvg');
+  if (!svg) return;
+
+  const series = benchState.data[benchState.mode] || [];
+  if (!series.length) return;
+
+  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+  const gridColor = isLight ? 'rgba(148, 163, 184, 0.35)' : 'rgba(255, 255, 255, 0.08)';
+  const axisColor = isLight ? '#64748b' : '#94a3b8';
+  const labelColor = isLight ? '#334155' : '#cbd5e1';
+
+  const W = 680;
+  const H = 310;
+  const padL = 62;
+  const padR = 26;
+  const padT = 22;
+  const padB = 46;
+  const plotW = W - padL - padR;
+  const plotH = H - padT - padB;
+
+  const maxVal = Math.max(
+    1,
+    ...series.map(d => Math.max(d.kruskal, d.prim, d.boruvka))
+  ) * 1.15;
+
+  svg.innerHTML = '';
+
+  const ns = 'http://www.w3.org/2000/svg';
+  const createEl = (tag, attrs) => {
+    const el = document.createElementNS(ns, tag);
+    Object.keys(attrs).forEach(k => el.setAttribute(k, String(attrs[k])));
+    return el;
+  };
+
+  // Horizontal Gridlines & Y Ticks
+  const yTicks = 5;
+  for (let i = 0; i <= yTicks; i++) {
+    const frac = i / yTicks;
+    const val = maxVal * frac;
+    const y = padT + plotH - frac * plotH;
+
+    svg.appendChild(createEl('line', {
+      x1: padL, y1: y, x2: W - padR, y2: y,
+      stroke: gridColor,
+      'stroke-dasharray': i === 0 ? 'none' : '4 4',
+      'stroke-width': i === 0 ? '1.5' : '1'
+    }));
+
+    const txt = createEl('text', {
+      x: padL - 10, y: y + 4,
+      'text-anchor': 'end',
+      fill: axisColor,
+      'font-family': 'JetBrains Mono',
+      'font-size': '11'
+    });
+    txt.textContent = val >= 10 ? val.toFixed(0) : val.toFixed(1);
+    svg.appendChild(txt);
+  }
+
+  // Y Axis Unit Label
+  const yUnit = createEl('text', {
+    x: 16, y: padT + plotH / 2,
+    fill: axisColor,
+    'font-family': 'JetBrains Mono',
+    'font-size': '11',
+    transform: `rotate(-90, 16, ${padT + plotH / 2})`,
+    'text-anchor': 'middle'
+  });
+  yUnit.textContent = 'Thời gian (ms)';
+  svg.appendChild(yUnit);
+
+  // X Axis Positions & Labels
+  const xPos = (idx) => {
+    if (series.length === 1) return padL + plotW / 2;
+    return padL + (idx / (series.length - 1)) * plotW;
+  };
+  const yPos = (val) => padT + plotH - (val / maxVal) * plotH;
+
+  series.forEach((d, idx) => {
+    const x = xPos(idx);
+    svg.appendChild(createEl('line', {
+      x1: x, y1: padT, x2: x, y2: padT + plotH,
+      stroke: gridColor, 'stroke-dasharray': '3 3', 'stroke-width': '1'
+    }));
+
+    const lbl = createEl('text', {
+      x, y: padT + plotH + 20,
+      'text-anchor': 'middle',
+      fill: labelColor,
+      'font-family': 'JetBrains Mono',
+      'font-size': '11',
+      'font-weight': '600'
+    });
+    lbl.textContent = `V=${d.V}`;
+    svg.appendChild(lbl);
+
+    const sub = createEl('text', {
+      x, y: padT + plotH + 34,
+      'text-anchor': 'middle',
+      fill: axisColor,
+      'font-family': 'JetBrains Mono',
+      'font-size': '9.5'
+    });
+    sub.textContent = `(E≈${d.E >= 1000 ? (d.E / 1000).toFixed(1) + 'k' : d.E})`;
+    svg.appendChild(sub);
+  });
+
+  // Draw Polylines for the 3 Algorithms
+  const algos = [
+    { key: 'boruvka', label: 'Borůvka (Song song)', color: '#f59e0b' },
+    { key: 'prim', label: 'Prim (Min-Heap)', color: '#3b82f6' },
+    { key: 'kruskal', label: 'Kruskal (DSU)', color: '#10b981' }
+  ];
+
+  algos.forEach(a => {
+    const pts = series.map((d, i) => `${xPos(i).toFixed(1)},${yPos(d[a.key]).toFixed(1)}`).join(' ');
+    svg.appendChild(createEl('polyline', {
+      points: pts,
+      fill: 'none',
+      stroke: a.color,
+      'stroke-width': '3.2',
+      'stroke-linecap': 'round',
+      'stroke-linejoin': 'round'
+    }));
+
+    series.forEach((d, i) => {
+      const cx = xPos(i);
+      const cy = yPos(d[a.key]);
+      svg.appendChild(createEl('circle', {
+        cx, cy, r: '5.5',
+        fill: isLight ? '#ffffff' : '#0f172a',
+        stroke: a.color,
+        'stroke-width': '2.8'
+      }));
+    });
+  });
+
+  // Hover Vertical Columns for Interactive Tooltip
+  const tooltip = document.getElementById('benchTooltip');
+  const svgWrap = document.getElementById('benchSvgWrap');
+  const guideLine = createEl('line', {
+    x1: -100, y1: padT, x2: -100, y2: padT + plotH,
+    stroke: isLight ? '#2563eb' : '#38bdf8',
+    'stroke-width': '1.5',
+    'stroke-dasharray': '4 3',
+    opacity: '0'
+  });
+  svg.appendChild(guideLine);
+
+  const colW = plotW / Math.max(1, series.length);
+  series.forEach((d, idx) => {
+    const x = xPos(idx);
+    const hitRect = createEl('rect', {
+      x: Math.max(padL, x - colW / 2),
+      y: padT,
+      width: colW,
+      height: plotH,
+      fill: 'transparent',
+      style: 'cursor: crosshair;'
+    });
+
+    hitRect.addEventListener('mouseenter', () => {
+      guideLine.setAttribute('x1', String(x));
+      guideLine.setAttribute('x2', String(x));
+      guideLine.setAttribute('opacity', '0.85');
+      if (tooltip && svgWrap) {
+        const bestVal = Math.min(d.kruskal, d.prim, d.boruvka);
+        const winner = bestVal === d.kruskal ? 'Kruskal' : (bestVal === d.prim ? 'Prim' : 'Borůvka');
+        tooltip.innerHTML = `
+          <div style="font-weight:700; margin-bottom:4px; border-bottom:1px solid rgba(148,163,184,0.3); padding-bottom:3px;">
+            V = ${d.V} đỉnh · E = ${d.E.toLocaleString()} cạnh
+          </div>
+          <div style="color:#10b981;">● Kruskal : <strong>${d.kruskal.toFixed(2)} ms</strong></div>
+          <div style="color:#3b82f6;">● Prim    : <strong>${d.prim.toFixed(2)} ms</strong></div>
+          <div style="color:#f59e0b;">● Borůvka : <strong>${d.boruvka.toFixed(2)} ms</strong></div>
+          <div style="margin-top:4px; font-size:0.72rem; opacity:0.9;">⚡ Nhanh nhất: <strong>${winner}</strong></div>
+        `;
+        const rect = svgWrap.getBoundingClientRect();
+        const px = (x / W) * (rect.width || W);
+        const left = px > (rect.width * 0.62) ? px - 185 : px + 14;
+        tooltip.style.left = `${Math.max(8, left)}px`;
+        tooltip.style.top = `16px`;
+        tooltip.classList.add('show');
+      }
+    });
+
+    hitRect.addEventListener('mouseleave', () => {
+      guideLine.setAttribute('opacity', '0');
+      if (tooltip) tooltip.classList.remove('show');
+    });
+
+    svg.appendChild(hitRect);
+  });
+
+  // Update Right Sidebar Comparison Bars (Peak Scale V)
+  const last = series[series.length - 1];
+  const peakMax = Math.max(0.01, last.kruskal, last.prim, last.boruvka);
+  const barK = document.getElementById('benchBarKruskal');
+  const barP = document.getElementById('benchBarPrim');
+  const barB = document.getElementById('benchBarBoruvka');
+  const valK = document.getElementById('benchValKruskal');
+  const valP = document.getElementById('benchValPrim');
+  const valB = document.getElementById('benchValBoruvka');
+  const peakTitle = document.getElementById('benchPeakTitle');
+  const chartTitle = document.getElementById('benchChartTitle');
+
+  if (chartTitle) {
+    chartTitle.textContent = benchState.mode === 'sparse'
+      ? 'Đồ Thị Thưa (E ≈ 2.5·V): Thời gian thực thi (ms)'
+      : 'Đồ Thị Dày (E ≈ 0.25·V²): Thời gian thực thi (ms)';
+  }
+  if (peakTitle) {
+    peakTitle.textContent = `MỐC LỚN NHẤT (V = ${last.V}, E = ${last.E.toLocaleString()})`;
+  }
+  if (barK) barK.style.width = `${Math.max(8, (last.kruskal / peakMax) * 100)}%`;
+  if (barP) barP.style.width = `${Math.max(8, (last.prim / peakMax) * 100)}%`;
+  if (barB) barB.style.width = `${Math.max(8, (last.boruvka / peakMax) * 100)}%`;
+  if (valK) valK.textContent = `${last.kruskal.toFixed(2)} ms`;
+  if (valP) valP.textContent = `${last.prim.toFixed(2)} ms`;
+  if (valB) valB.textContent = `${last.boruvka.toFixed(2)} ms`;
+}
+
+function initSpeedBenchmarkChart() {
+  const sparseBtn = document.getElementById('benchModeSparse');
+  const denseBtn = document.getElementById('benchModeDense');
+  const liveBtn = document.getElementById('benchLiveRunBtn');
+
+  const switchMode = (mode) => {
+    benchState.mode = mode;
+    if (sparseBtn) sparseBtn.classList.toggle('active', mode === 'sparse');
+    if (denseBtn) denseBtn.classList.toggle('active', mode === 'dense');
+    renderBenchmarkChart();
+  };
+
+  if (sparseBtn && !sparseBtn.dataset.bound) {
+    sparseBtn.dataset.bound = '1';
+    sparseBtn.addEventListener('click', () => switchMode('sparse'));
+  }
+  if (denseBtn && !denseBtn.dataset.bound) {
+    denseBtn.dataset.bound = '1';
+    denseBtn.addEventListener('click', () => switchMode('dense'));
+  }
+  if (liveBtn && !liveBtn.dataset.bound) {
+    liveBtn.dataset.bound = '1';
+    liveBtn.addEventListener('click', executeLiveBenchmark);
+  }
+
+  renderBenchmarkChart();
+}
+
+if (typeof window !== 'undefined') {
+  window.renderBenchmarkChart = renderBenchmarkChart;
+  window.executeLiveBenchmark = executeLiveBenchmark;
+}
+
+// Start everything cleanly regardless of readyState
+if (typeof document !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPresentation);
+  } else {
+    initPresentation();
+  }
+}
 
